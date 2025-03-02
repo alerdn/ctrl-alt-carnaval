@@ -1,8 +1,9 @@
-using System;
 using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
 {
+    public static PlayerStateMachine Instance { get; private set; }
+
     [field: SerializeField] public InputReader InputReader { get; private set; }
 
     [field: SerializeField] public CharacterController Controller { get; private set; }
@@ -14,13 +15,17 @@ public class PlayerStateMachine : StateMachine
 
     public Camera MainCamera { get; private set; }
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         MainCamera = Camera.main;
+        InputReader.SetControllerMode(ControllerMode.Gameplay);
 
         SwitchState(new PlayerFreeLookState(this));
-
-        InputReader.SetControllerMode(ControllerMode.Gameplay);
     }
 
     public float GetNormalizedTime(string tag)

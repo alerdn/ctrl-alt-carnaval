@@ -1,16 +1,23 @@
 using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Gun : BeatReactive
 {
     public event Action<bool> OnFireEvent;
 
     [SerializeField] private PlayerStateMachine _player;
+    [SerializeField] private Transform ShootingPoint;
+    [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private float _range;
     [SerializeField] private float _followSpeed;
     [SerializeField] private LayerMask GroundMask;
     [SerializeField] private float _beatThreshold;
+
+    private IObjectPool<Bullet> _bulletPool;
+    private int _maxPoolSize = 20;
 
     private Camera _mainCamera;
     private float _startYPostion;
@@ -24,6 +31,8 @@ public class Gun : BeatReactive
         transform.DOMoveY(_startYPostion + .1f, 1f).From(_startYPostion - .1f).SetLoops(-1, LoopType.Yoyo);
 
         _player.InputReader.OnFireEvent.AddListener(Fire);
+
+        _bulletPool = new LinkedPool<Bullet>(OnCreateBullet, OnTakeFromPool, OnReturnToPool, OnDestroyBullet, true, _maxPoolSize);
     }
 
     private void OnDestroy()
@@ -36,6 +45,33 @@ public class Gun : BeatReactive
         MoveToPlayer();
         Aim();
     }
+
+    #region Bullet Pool
+
+    private Bullet OnCreateBullet()
+    {
+        Bullet bullet = Instantiate(_bulletPrefab, ShootingPoint.position, Quaternion.identity);
+        bullet.gameObject.SetActive(false);
+
+        return bullet;
+    }
+
+    private void OnTakeFromPool(Bullet bullet)
+    {
+        bullet.gameObject.SetActive(true);
+    }
+
+    private void OnReturnToPool(Bullet bullet)
+    {
+        bullet.gameObject.SetActive(false);
+    }
+
+    private void OnDestroyBullet(Bullet bullet)
+    {
+        Destroy(bullet.gameObject);
+    }
+
+    #endregion
 
     public override void OnBeat()
     {
@@ -78,17 +114,20 @@ public class Gun : BeatReactive
         }
     }
 
-    private void Fire()
+    private async void Fire()
     {
-        if (Time.time - _lastBeatTime < _beatThreshold)
+        bool onTime = Time.time - _lastBeatTime < _beatThreshold;
+        OnFireEvent?.Invoke(onTime);
+
+        for (int i = 0; i < 3; i++)
         {
-            Debug.Log("Fire!");
-            OnFireEvent?.Invoke(true);
-        }
-        else
-        {
-            Debug.Log("Missed the beat!");
-            OnFireEvent?.Invoke(false);
+            Bullet bullet = _bulletPool.Get();
+            bullet.SetPool(_bulletPool);
+            bullet.Fire(ShootingPoint.position, transform.rotation);
+
+            bullet.GetComponent<MeshRenderer>().material.color = onTime ? Color.green : Color.red;
+
+            await UniTask.Delay(100);
         }
     }
 }

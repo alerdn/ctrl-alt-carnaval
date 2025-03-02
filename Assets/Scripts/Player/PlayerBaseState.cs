@@ -2,9 +2,6 @@ using UnityEngine;
 
 public abstract class PlayerBaseState : State
 {
-    protected readonly int FreeLookSpeedHash = Animator.StringToHash("FreeLookSpeed");
-    protected const float AnimatorDampTime = .075f;
-
     protected PlayerStateMachine stateMachine;
 
     public PlayerBaseState(PlayerStateMachine stateMachine)

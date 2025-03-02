@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
 {
-    [SerializeField] public InputReader InputReader { get; private set; }
+    [field: SerializeField] public InputReader InputReader { get; private set; }
 
     [field: SerializeField] public CharacterController Controller { get; private set; }
     [field: SerializeField] public Animator Animator { get; private set; }
+
     [field: SerializeField] public float FreeLookMovement { get; private set; }
     [field: SerializeField] public float RotationDamping { get; private set; }
     [field: SerializeField] public ForceReceiver ForceReceiver { get; private set; }
@@ -16,6 +17,10 @@ public class PlayerStateMachine : StateMachine
     private void Start()
     {
         MainCamera = Camera.main;
+
+        SwitchState(new PlayerFreeLookState(this));
+
+        InputReader.SetControllerMode(ControllerMode.Gameplay);
     }
 
     public float GetNormalizedTime(string tag)

@@ -32,18 +32,18 @@ public class BeatController : MonoBehaviour
 
     private void Start()
     {
-        PulseObject[] objs = FindObjectsByType<PulseObject>(FindObjectsSortMode.None);
-        foreach (PulseObject obj in objs)
+        BeatReactive[] objs = FindObjectsByType<BeatReactive>(FindObjectsSortMode.None);
+        foreach (BeatReactive obj in objs)
         {
             Interval interval = _intervals.Find(interval => interval.Steps == obj.Step);
             if (interval != null)
             {
-                interval.OnTrigger.AddListener(obj.Pulse);
+                interval.OnTrigger.AddListener(obj.OnBeat);
             }
             else
             {
                 Interval newInterval = new Interval { Steps = obj.Step, OnTrigger = new UnityEvent() };
-                newInterval.OnTrigger.AddListener(obj.Pulse);
+                newInterval.OnTrigger.AddListener(obj.OnBeat);
 
                 _intervals.Add(newInterval);
             }

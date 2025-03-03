@@ -8,6 +8,7 @@ public class PlayerStateMachine : StateMachine
 
     [field: SerializeField] public CharacterController Controller { get; private set; }
     [field: SerializeField] public Animator Animator { get; private set; }
+    [field: SerializeField] public Health Health { get; private set; }
 
     [field: SerializeField] public float FreeLookMovement { get; private set; }
     [field: SerializeField] public float RotationDamping { get; private set; }
@@ -20,12 +21,34 @@ public class PlayerStateMachine : StateMachine
         Instance = this;
     }
 
+    private void OnEnable()
+    {
+        Health.OnTakeDamage += HandleTakeDamage;
+        Health.OnDie += HandleDie;
+    }
+
+    private void OnDisable()
+    {
+        Health.OnTakeDamage -= HandleTakeDamage;
+        Health.OnDie -= HandleDie;
+    }
+
     private void Start()
     {
         MainCamera = Camera.main;
         InputReader.SetControllerMode(ControllerMode.Gameplay);
 
         SwitchState(new PlayerFreeLookState(this));
+    }
+
+    private void HandleTakeDamage()
+    {
+
+    }
+
+    private void HandleDie()
+    {
+        SwitchState(new PlayerDeadState(this));
     }
 
     public float GetNormalizedTime(string tag)

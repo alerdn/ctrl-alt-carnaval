@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 4670394018883276872}
   - component: {fileID: 921928004750014120}
   - component: {fileID: 2837659408140359372}
+  - component: {fileID: 1605702325584611535}
   m_Layer: 8
   m_Name: PFB_Enemy
   m_TagString: Enemy
@@ -85,10 +86,12 @@ MonoBehaviour:
   <CharacterController>k__BackingField: {fileID: 193895908780385359}
   <Agent>k__BackingField: {fileID: 4670394018883276872}
   <ForceReceiver>k__BackingField: {fileID: 921928004750014120}
+  <Health>k__BackingField: {fileID: 1605702325584611535}
   <BeatComponent>k__BackingField: {fileID: 2837659408140359372}
   <ShootingPoint>k__BackingField: {fileID: 5208964665690368974}
   <BulletPrefab>k__BackingField: {fileID: 2819637699459930086, guid: 9fc0b41fc08596a4f84e3d8d69e45623, type: 3}
   <AttacksPerBeat>k__BackingField: 3
+  <Damage>k__BackingField: 20
   <AttackRange>k__BackingField: 10
   <MovementSpeed>k__BackingField: 8
 --- !u!143 &193895908780385359
@@ -165,6 +168,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Step>k__BackingField: 4
+--- !u!114 &1605702325584611535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602381005397385813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f19d1e8b360a9243ad920be2c88ff5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialMaxHealth: 100
+  _health: 0
+  _currentMaxHealth: 0
 --- !u!1 &8870929893334460231
 GameObject:
   m_ObjectHideFlags: 0

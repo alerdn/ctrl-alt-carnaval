@@ -13,8 +13,9 @@ public enum ControllerMode
 [CreateAssetMenu(fileName = "InputReader", menuName = "InputReader")]
 public class InputReader : ScriptableObject, IPlayerActions, IUIActions
 {
-    public UnityEvent OnPauseEvent;
-    public UnityEvent OnFireEvent;
+    public UnityAction OnPauseEvent;
+    public UnityAction OnFireEvent;
+    public UnityAction InteractEvent;
 
     public Vector2 MovementValue { get; private set; }
 
@@ -60,5 +61,12 @@ public class InputReader : ScriptableObject, IPlayerActions, IUIActions
         if (!context.performed) return;
 
         OnPauseEvent?.Invoke();
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        InteractEvent?.Invoke();
     }
 }

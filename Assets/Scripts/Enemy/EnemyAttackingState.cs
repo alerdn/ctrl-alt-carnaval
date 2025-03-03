@@ -14,6 +14,11 @@ public class EnemyAttackingState : EnemyBaseState
 
     public override void Tick(float deltaTime)
     {
+        if (stateMachine.Player.Health.IsDead)
+        {
+            stateMachine.SwitchState(new EnemyIdleState(stateMachine));
+        }
+
         if (!IsInAttackRange())
         {
             stateMachine.SwitchState(new EnemyChasingState(stateMachine));
@@ -32,7 +37,6 @@ public class EnemyAttackingState : EnemyBaseState
         for (int i = 0; i < stateMachine.AttacksPerBeat; i++)
         {
             Bullet bullet = stateMachine.BulletPool.Get();
-            bullet.SetPool(stateMachine.BulletPool);
 
             bullet.Fire(stateMachine.ShootingPoint.position, stateMachine.ShootingPoint.rotation);
             await UniTask.Delay(100);

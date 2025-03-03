@@ -11,6 +11,7 @@ public class Gun : BeatReactive
     [SerializeField] private PlayerStateMachine _player;
     [SerializeField] private Transform ShootingPoint;
     [SerializeField] private Bullet _bulletPrefab;
+    [SerializeField] private int _damage;
     [SerializeField] private float _range;
     [SerializeField] private float _followSpeed;
     [SerializeField] private LayerMask GroundMask;
@@ -30,14 +31,14 @@ public class Gun : BeatReactive
 
         transform.DOMoveY(_startYPostion + .1f, 1f).From(_startYPostion - .1f).SetLoops(-1, LoopType.Yoyo);
 
-        _player.InputReader.OnFireEvent.AddListener(Fire);
+        _player.InputReader.OnFireEvent += Fire;
 
         _bulletPool = new LinkedPool<Bullet>(OnCreateBullet, OnTakeFromPool, OnReturnToPool, OnDestroyBullet, true, _maxPoolSize);
     }
 
     private void OnDestroy()
     {
-        _player.InputReader.OnFireEvent.RemoveListener(Fire);
+        _player.InputReader.OnFireEvent -= Fire;
     }
 
     private void Update()
@@ -52,6 +53,8 @@ public class Gun : BeatReactive
     {
         Bullet bullet = Instantiate(_bulletPrefab, ShootingPoint.position, Quaternion.identity);
         bullet.gameObject.SetActive(false);
+
+        bullet.Init(_damage, _bulletPool);
 
         return bullet;
     }
@@ -122,7 +125,6 @@ public class Gun : BeatReactive
         for (int i = 0; i < 3; i++)
         {
             Bullet bullet = _bulletPool.Get();
-            bullet.SetPool(_bulletPool);
             bullet.Fire(ShootingPoint.position, transform.rotation);
 
             bullet.GetComponent<MeshRenderer>().material.color = onTime ? Color.green : Color.red;

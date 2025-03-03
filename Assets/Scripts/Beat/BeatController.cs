@@ -24,7 +24,7 @@ public class Interval
     }
 }
 
-public class BeatController : MonoBehaviour
+public class BeatController : Singleton<BeatController>
 {
     [SerializeField] private float _bpm;
     [SerializeField] private AudioSource _audioSource;

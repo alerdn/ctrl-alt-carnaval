@@ -8,10 +8,12 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public CharacterController CharacterController { get; private set; }
     [field: SerializeField] public NavMeshAgent Agent { get; private set; }
     [field: SerializeField] public ForceReceiver ForceReceiver { get; private set; }
+    [field: SerializeField] public Health Health { get; private set; }
     [field: SerializeField] public BeatComponent BeatComponent { get; private set; }
     [field: SerializeField] public Transform ShootingPoint { get; private set; }
     [field: SerializeField] public Bullet BulletPrefab { get; private set; }
     [field: SerializeField] public int AttacksPerBeat { get; private set; }
+    [field: SerializeField] public int Damage { get; private set; }
 
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
@@ -19,6 +21,18 @@ public class EnemyStateMachine : StateMachine
     public PlayerStateMachine Player { get; private set; }
     public IObjectPool<Bullet> BulletPool { get; private set; }
     private int _maxPoolSize = 20;
+
+    private void OnEnable()
+    {
+        Health.OnTakeDamage += HandleTakeDamage;
+        Health.OnDie += HandleDie;
+    }
+
+    private void OnDisable()
+    {
+        Health.OnTakeDamage -= HandleTakeDamage;
+        Health.OnDie -= HandleDie;
+    }
 
     private void Start()
     {
@@ -39,6 +53,8 @@ public class EnemyStateMachine : StateMachine
         Bullet bullet = Instantiate(BulletPrefab, ShootingPoint.position, Quaternion.identity);
         bullet.gameObject.SetActive(false);
 
+        bullet.Init(Damage, BulletPool);
+
         return bullet;
     }
 
@@ -58,6 +74,16 @@ public class EnemyStateMachine : StateMachine
     }
 
     #endregion
+
+    private void HandleTakeDamage()
+    {
+
+    }
+
+    private void HandleDie()
+    {
+        SwitchState(new EnemyDeadState(this));
+    }
 
     private void OnDrawGizmosSelected()
     {

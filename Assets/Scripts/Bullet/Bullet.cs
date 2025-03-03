@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private string _targetTag;
 
     private Rigidbody _rb;
+    private int _damage;
     private IObjectPool<Bullet> _pool;
     private float _currentLifeTime;
 
@@ -34,16 +35,17 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    public void Init(int damage, IObjectPool<Bullet> bulletPool)
+    {
+        _damage = damage;
+        _pool = bulletPool;
+    }
+
     public void Fire(Vector3 position, Quaternion rotation)
     {
         transform.SetPositionAndRotation(position, rotation);
 
         _rb.AddForce(transform.forward * _shootForce, ForceMode.Impulse);
-    }
-
-    public void SetPool(IObjectPool<Bullet> bulletPool)
-    {
-        _pool = bulletPool;
     }
 
     private void Release()
@@ -56,9 +58,13 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.name);
         if (other.CompareTag(_targetTag))
         {
-            Debug.Log($"{_targetTag} hit!");
+            if (other.TryGetComponent(out Health health))
+            {
+                health.TakeDamage(_damage);
+            }
         }
 
         if (isActiveAndEnabled) Release();

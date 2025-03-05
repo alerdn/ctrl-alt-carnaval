@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8971905233270831842}
   - component: {fileID: 3588847281323004012}
   - component: {fileID: 1827587357263120450}
+  - component: {fileID: 5620323793596279876}
   m_Layer: 6
   m_Name: PFB_Player
   m_TagString: Player
@@ -53,9 +54,15 @@ MonoBehaviour:
   <Animator>k__BackingField: {fileID: 2571415132476955105}
   <Health>k__BackingField: {fileID: 1827587357263120450}
   <Renderer>k__BackingField: {fileID: 2443534670679157989}
+  <ForceReceiver>k__BackingField: {fileID: 3588847281323004012}
+  <BeatComp>k__BackingField: {fileID: 5620323793596279876}
+  <BeatThreshold>k__BackingField: 0.1
   <FreeLookMovement>k__BackingField: 6
   <RotationDamping>k__BackingField: 10
-  <ForceReceiver>k__BackingField: {fileID: 3588847281323004012}
+  <DodgeDuration>k__BackingField: 0.1
+  <DodgeLength>k__BackingField: 3
+  <DashCooldown>k__BackingField: 0.5
+  DashCooldownTimeStamp: 0
 --- !u!143 &8971905233270831842
 CharacterController:
   m_ObjectHideFlags: 0
@@ -110,6 +117,22 @@ MonoBehaviour:
   _initialMaxHealth: 100
   _health: 0
   _currentMaxHealth: 0
+--- !u!114 &5620323793596279876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486458888468266094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b1ec24b5b17cb49ba5c2dc5f052e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Step>k__BackingField: 4
+  OnBeatEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2853553179515775257
 PrefabInstance:
   m_ObjectHideFlags: 0

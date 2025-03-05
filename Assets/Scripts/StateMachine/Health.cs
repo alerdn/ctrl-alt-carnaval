@@ -1,12 +1,12 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    public event Action OnTakeDamage;
-    public event Action OnDie;
-    public event Action<int, int> OnHealthChanged;
-    public event Action<int> OnMaxHealthChanged;
+    public event UnityAction OnTakeDamage;
+    public event UnityAction OnDie;
+    public event UnityAction<int, int> OnHealthChanged;
+    public event UnityAction<int> OnMaxHealthChanged;
 
     public bool IsDead => _health == 0;
     public int CurrentMaxHealth

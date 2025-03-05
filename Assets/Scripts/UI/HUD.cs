@@ -25,7 +25,7 @@ public class HUD : MonoBehaviour
         _currentComboIndex = 0;
         _comboText.text = _comboIcons[_currentComboIndex];
 
-        _gun.OnFireEvent += VerifyFire;
+        PlayerStateMachine.Instance.OnBeatAction += VerifyBeat;
         PlayerStateMachine.Instance.Health.OnHealthChanged += UpdateLifeBar;
 
         UpdateLifeBar(PlayerStateMachine.Instance.Health.CurrentHealth, PlayerStateMachine.Instance.Health.CurrentMaxHealth);
@@ -33,7 +33,7 @@ public class HUD : MonoBehaviour
 
     private void OnDestroy()
     {
-        _gun.OnFireEvent -= VerifyFire;
+        PlayerStateMachine.Instance.OnBeatAction -= VerifyBeat;
         PlayerStateMachine.Instance.Health.OnHealthChanged -= UpdateLifeBar;
     }
 
@@ -45,7 +45,7 @@ public class HUD : MonoBehaviour
         _lifeBarTween = _lifeBarAux.DOFillAmount((float)currentHP / maxHP, .5f).SetDelay(1f);
     }
 
-    private void VerifyFire(bool success)
+    private void VerifyBeat(bool success)
     {
         if (success)
         {

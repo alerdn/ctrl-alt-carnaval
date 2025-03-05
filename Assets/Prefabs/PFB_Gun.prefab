@@ -56,7 +56,7 @@ MonoBehaviour:
   GroundMask:
     serializedVersion: 2
     m_Bits: 8
-  _beatThreshold: 0.25
+  _beatThreshold: 0.15
   _withinBeatWindow: 0
 --- !u!1 &7906455866498342344
 GameObject:

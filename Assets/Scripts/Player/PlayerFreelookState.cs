@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerFreeLookState : PlayerBaseState
@@ -15,6 +12,8 @@ public class PlayerFreeLookState : PlayerBaseState
 
     public override void Enter()
     {
+        stateMachine.InputReader.DashEvent += Dash;
+
         stateMachine.Animator.CrossFadeInFixedTime(FreeLookBlendTreeHash, 0.1f);
     }
 
@@ -35,6 +34,12 @@ public class PlayerFreeLookState : PlayerBaseState
 
     public override void Exit()
     {
+        stateMachine.InputReader.DashEvent -= Dash;
+    }
 
+    private void Dash()
+    {
+        if (Time.time > stateMachine.DashCooldownTimeStamp)
+            stateMachine.SwitchState(new PlayerDashingState(stateMachine, stateMachine.InputReader.MovementValue));
     }
 }

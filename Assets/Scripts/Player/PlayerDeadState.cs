@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PlayerDeadState : PlayerBaseState
 {
-    private float _respawnDelay = 2f;
+    private readonly int DeadHash = Animator.StringToHash("Dead");
+    private float _respawnDelay = 5f;
 
     public PlayerDeadState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
@@ -11,6 +12,7 @@ public class PlayerDeadState : PlayerBaseState
     public override void Enter()
     {
         AudioManager.Instance.PlayCue("GameOver");
+        stateMachine.Animator.CrossFadeInFixedTime(DeadHash, .1f);
     }
 
     public override void Tick(float deltaTime)

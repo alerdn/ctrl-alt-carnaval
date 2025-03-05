@@ -1,12 +1,13 @@
-using System;
-using UnityEngine;
+using UnityEngine.Events;
 
 public class BeatComponent : BeatReactive
 {
-    public event Action OnBeatEvent;
+    public UnityEvent OnBeatEvent;
+    public UnityAction OnBeatAction;
 
     public override void OnBeat()
     {
+        OnBeatAction?.Invoke();
         OnBeatEvent?.Invoke();
     }
 }

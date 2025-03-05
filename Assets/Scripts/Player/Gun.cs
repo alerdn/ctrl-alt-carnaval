@@ -17,6 +17,9 @@ public class Gun : BeatReactive
     [SerializeField] private LayerMask GroundMask;
     [SerializeField] private float _beatThreshold;
 
+    [Header("Debug")]
+    [SerializeField] private bool _withinBeatWindow;
+
     private IObjectPool<Bullet> _bulletPool;
     private int _maxPoolSize = 20;
 
@@ -76,10 +79,14 @@ public class Gun : BeatReactive
 
     #endregion
 
+    #region Beat
+
     public override void OnBeat()
     {
         _lastBeatTime = Time.time;
     }
+
+    #endregion
 
     private void MoveToPlayer()
     {
@@ -117,19 +124,17 @@ public class Gun : BeatReactive
         }
     }
 
-    private async void Fire()
+    private void Fire()
     {
-        bool onTime = Time.time - _lastBeatTime < _beatThreshold;
-        OnFireEvent?.Invoke(onTime);
+        bool preTime = Time.time >= _lastBeatTime + 1 - _beatThreshold;
+        bool postTime = Time.time <= _lastBeatTime + _beatThreshold;
 
-        for (int i = 0; i < 3; i++)
-        {
-            Bullet bullet = _bulletPool.Get();
-            bullet.Fire(ShootingPoint.position, transform.rotation);
+        _withinBeatWindow = preTime || postTime;
+        OnFireEvent?.Invoke(_withinBeatWindow);
 
-            bullet.GetComponent<MeshRenderer>().material.color = onTime ? Color.green : Color.red;
+        Bullet bullet = _bulletPool.Get();
+        bullet.Fire(ShootingPoint.position, transform.rotation);
 
-            await UniTask.Delay(100);
-        }
+        bullet.GetComponent<MeshRenderer>().material.color = _withinBeatWindow ? Color.green : Color.red;
     }
 }

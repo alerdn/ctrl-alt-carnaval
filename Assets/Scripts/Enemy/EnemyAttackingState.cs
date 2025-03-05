@@ -1,6 +1,5 @@
-using System.Collections;
-using UnityEngine;
 using Cysharp.Threading.Tasks;
+
 public class EnemyAttackingState : EnemyBaseState
 {
     public EnemyAttackingState(EnemyStateMachine stateMachine) : base(stateMachine)
@@ -9,7 +8,7 @@ public class EnemyAttackingState : EnemyBaseState
 
     public override void Enter()
     {
-        stateMachine.BeatComponent.OnBeatEvent += Shoot;
+        stateMachine.BeatComponent.OnBeatAction += Shoot;
     }
 
     public override void Tick(float deltaTime)
@@ -29,17 +28,12 @@ public class EnemyAttackingState : EnemyBaseState
 
     public override void Exit()
     {
-        stateMachine.BeatComponent.OnBeatEvent -= Shoot;
+        stateMachine.BeatComponent.OnBeatAction -= Shoot;
     }
 
-    private async void Shoot()
+    private void Shoot()
     {
-        for (int i = 0; i < stateMachine.AttacksPerBeat; i++)
-        {
-            Bullet bullet = stateMachine.BulletPool.Get();
-
-            bullet.Fire(stateMachine.ShootingPoint.position, stateMachine.ShootingPoint.rotation);
-            await UniTask.Delay(100);
-        }
+        Bullet bullet = stateMachine.BulletPool.Get();
+        bullet.Fire(stateMachine.ShootingPoint.position, stateMachine.ShootingPoint.rotation);
     }
 }

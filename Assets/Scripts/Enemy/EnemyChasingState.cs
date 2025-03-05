@@ -3,8 +3,6 @@ using UnityEngine;
 public class EnemyChasingState : EnemyBaseState
 {
     private readonly int LocomotionHash = Animator.StringToHash("Locomotion");
-    private readonly int SpeedHash = Animator.StringToHash("Speed");
-
 
     public EnemyChasingState(EnemyStateMachine stateMachine) : base(stateMachine)
     {
@@ -24,8 +22,6 @@ public class EnemyChasingState : EnemyBaseState
 
         MoveToPlayer(deltaTime);
         FacePlayer();
-
-        stateMachine.Animator.SetFloat(SpeedHash, 1f, .1f, deltaTime);
     }
 
     public override void Exit()

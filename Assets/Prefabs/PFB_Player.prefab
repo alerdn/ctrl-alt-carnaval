@@ -52,6 +52,7 @@ MonoBehaviour:
   <Controller>k__BackingField: {fileID: 8971905233270831842}
   <Animator>k__BackingField: {fileID: 2571415132476955105}
   <Health>k__BackingField: {fileID: 1827587357263120450}
+  <Renderer>k__BackingField: {fileID: 2443534670679157989}
   <FreeLookMovement>k__BackingField: 6
   <RotationDamping>k__BackingField: 10
   <ForceReceiver>k__BackingField: {fileID: 3588847281323004012}
@@ -172,6 +173,11 @@ PrefabInstance:
 --- !u!4 &2311298794534473458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7b1aff8309d69fc4faaeee3e33f10148, type: 3}
+  m_PrefabInstance: {fileID: 2853553179515775257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2443534670679157989 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 464141968781854204, guid: 7b1aff8309d69fc4faaeee3e33f10148, type: 3}
   m_PrefabInstance: {fileID: 2853553179515775257}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3123442804537447496 stripped

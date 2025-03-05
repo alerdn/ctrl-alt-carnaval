@@ -133,8 +133,7 @@ public class Gun : BeatReactive
         OnFireEvent?.Invoke(_withinBeatWindow);
 
         Bullet bullet = _bulletPool.Get();
-        bullet.Fire(ShootingPoint.position, transform.rotation);
-
-        bullet.GetComponent<MeshRenderer>().material.color = _withinBeatWindow ? Color.green : Color.red;
+        bullet.Fire(_withinBeatWindow, ShootingPoint.position, transform.rotation);
+        AudioManager.Instance.PlayCue("PlayerAttack");
     }
 }

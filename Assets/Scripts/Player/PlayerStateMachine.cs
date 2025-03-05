@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
@@ -9,10 +10,13 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public CharacterController Controller { get; private set; }
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public Health Health { get; private set; }
+    [field: SerializeField] public Renderer Renderer { get; private set; }
 
     [field: SerializeField] public float FreeLookMovement { get; private set; }
     [field: SerializeField] public float RotationDamping { get; private set; }
     [field: SerializeField] public ForceReceiver ForceReceiver { get; private set; }
+
+    private Tween _hitColorTween;
 
     public Camera MainCamera { get; private set; }
 
@@ -43,31 +47,13 @@ public class PlayerStateMachine : StateMachine
 
     private void HandleTakeDamage()
     {
-
+        _hitColorTween?.Kill();
+        _hitColorTween = Renderer.material.DOColor(Color.red, "_Color", .1f).SetLoops(2, LoopType.Yoyo);
     }
 
     private void HandleDie()
     {
         SwitchState(new PlayerDeadState(this));
-    }
-
-    public float GetNormalizedTime(string tag)
-    {
-        AnimatorStateInfo currentInfo = Animator.GetCurrentAnimatorStateInfo(0);
-        AnimatorStateInfo nextInfo = Animator.GetNextAnimatorStateInfo(0);
-
-        if (Animator.IsInTransition(0) && nextInfo.IsTag(tag))
-        {
-            return nextInfo.normalizedTime;
-        }
-        else if (!Animator.IsInTransition(0) && currentInfo.IsTag(tag))
-        {
-            return currentInfo.normalizedTime;
-        }
-        else
-        {
-            return 0f;
-        }
     }
 
     public Vector3 CalculeMovement()

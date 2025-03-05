@@ -8,7 +8,7 @@ public class EnemyAttackingState : EnemyBaseState
 
     public override void Enter()
     {
-        stateMachine.BeatComponent.OnBeatAction += Shoot;
+        stateMachine.BeatComponent.OnBeatAction += Attack;
     }
 
     public override void Tick(float deltaTime)
@@ -23,17 +23,27 @@ public class EnemyAttackingState : EnemyBaseState
             stateMachine.SwitchState(new EnemyChasingState(stateMachine));
         }
 
+        float normalizedTime = stateMachine.GetNormalizedTime(stateMachine.Animator, "Attack");
+        if (normalizedTime >= 0.9f)
+        {
+            stateMachine.SwitchState(new EnemyChasingState(stateMachine));
+        }
+
         FacePlayer();
     }
 
     public override void Exit()
     {
-        stateMachine.BeatComponent.OnBeatAction -= Shoot;
+        stateMachine.BeatComponent.OnBeatAction -= Attack;
     }
 
-    private void Shoot()
+    private void Attack()
     {
-        Bullet bullet = stateMachine.BulletPool.Get();
-        bullet.Fire(stateMachine.ShootingPoint.position, stateMachine.ShootingPoint.rotation);
+        AudioManager.Instance.PlayCue("EnemyAttack");
+        stateMachine.Animator.CrossFadeInFixedTime("Attack", 0.1f);
+        if (IsInAttackRange())
+        {
+            stateMachine.Player.Health.TakeDamage(stateMachine.Damage);
+        }
     }
 }

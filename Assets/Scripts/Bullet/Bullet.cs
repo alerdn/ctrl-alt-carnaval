@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _lifeTime = 5f;
     [SerializeField] private float _shootForce = 15;
     [SerializeField] private string _targetTag;
+    [SerializeField] private ParticleSystem _ps;
 
     private Rigidbody _rb;
     private int _damage;
@@ -41,8 +42,19 @@ public class Bullet : MonoBehaviour
         _pool = bulletPool;
     }
 
-    public void Fire(Vector3 position, Quaternion rotation)
+    public void Fire(bool onBeat, Vector3 position, Quaternion rotation)
     {
+        var mainModule = _ps.main;
+        if (onBeat)
+        {
+            mainModule.startLifetime = 1f;
+            _damage *= 2;
+        }
+        else
+        {
+            mainModule.startLifetime = .25f;
+        }
+
         transform.SetPositionAndRotation(position, rotation);
 
         _rb.AddForce(transform.forward * _shootForce, ForceMode.Impulse);

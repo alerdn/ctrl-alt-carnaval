@@ -47,8 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5d0cf4e3f2a0044bedb815515eb1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifeTime: 5
+  _lifeTime: 0.3
   _shootForce: 20
+  _maxHits: 3
   _targetTag: Enemy
   _ps: {fileID: 2583930632318434070}
 --- !u!135 &6753030279592892395

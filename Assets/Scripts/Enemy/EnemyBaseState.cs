@@ -9,11 +9,11 @@ public abstract class EnemyBaseState : State
         this.stateMachine = stateMachine;
     }
 
-    protected void Move(Vector3 motion, float deltaTime)
-    {
-        Vector3 force = stateMachine.ForceReceiver.Movement;
-        stateMachine.CharacterController.Move((motion + force) * deltaTime);
-    }
+    // protected void Move(Vector3 motion, float deltaTime)
+    // {
+    //     Vector3 force = stateMachine.ForceReceiver.Movement;
+    //     stateMachine.CharacterController.Move((motion + force) * deltaTime);
+    // }
 
     protected void FacePlayer()
     {

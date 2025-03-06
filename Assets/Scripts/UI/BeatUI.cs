@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class BeatUI : MonoBehaviour
 {
-    [SerializeField] private GameObject _iconPrefab; // Prefab do ícone que se moverá
+    [SerializeField] private GameObject _iconPrefab;
     [SerializeField] private Transform _container;
-    [SerializeField] private Transform _leftSpawnPoint; // Ponto de spawn da esquerda
-    [SerializeField] private Transform _rightSpawnPoint; // Ponto de spawn da direita
-    [SerializeField] private Transform _centerPoint; // Ponto onde os ícones se encontram
-    [SerializeField] private float _moveDuration = 3.0f; // Tempo que leva para o ícone chegar ao centro
+    [SerializeField] private Transform _leftSpawnPoint;
+    [SerializeField] private Transform _rightSpawnPoint;
+    [SerializeField] private Transform _centerPoint;
+    [SerializeField] private float _moveDuration = 3.0f;
     private BeatComponent _beatComp;
 
     private void Awake()

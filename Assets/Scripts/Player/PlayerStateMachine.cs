@@ -72,7 +72,7 @@ public class PlayerStateMachine : StateMachine
     private void HandleTakeDamage()
     {
         _hitColorTween?.Kill();
-        _hitColorTween = Renderer.material.DOColor(Color.red, "_Color", .1f).SetLoops(2, LoopType.Yoyo);
+        _hitColorTween = Renderer.material.DOColor(Color.red, "_Color", .1f).From(Color.white).SetLoops(2, LoopType.Yoyo);
     }
 
     private void HandleDie()

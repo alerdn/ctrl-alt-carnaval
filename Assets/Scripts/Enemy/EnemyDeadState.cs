@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class EnemyDeadState : EnemyBaseState
 {
     public EnemyDeadState(EnemyStateMachine stateMachine) : base(stateMachine)
@@ -8,7 +6,8 @@ public class EnemyDeadState : EnemyBaseState
 
     public override void Enter()
     {
-        Object.Destroy(stateMachine.gameObject);
+        //TODO: Drop XP
+        stateMachine.EnemyPool.Release(stateMachine);
     }
 
     public override void Tick(float deltaTime)

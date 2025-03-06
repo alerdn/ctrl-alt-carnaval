@@ -16,9 +16,13 @@ public class PlayerDashingState : PlayerBaseState
     {
         stateMachine.DashCooldownTimeStamp = Time.time + stateMachine.DashCooldown;
         stateMachine.Health.SetInvulnerable(true);
-        stateMachine.Controller.excludeLayers = LayerMask.GetMask("Enemy");
 
         _remainingDodgeTime = stateMachine.DodgeDuration;
+
+        if (stateMachine.IsWithinBeatWindow())
+        {
+            stateMachine.DashCooldownTimeStamp = Time.time + stateMachine.DashCooldown / 2f;
+        }
 
         stateMachine.Animator.CrossFadeInFixedTime(DashHash, .1f);
         AudioManager.Instance.PlayCue("Dash");
@@ -40,7 +44,6 @@ public class PlayerDashingState : PlayerBaseState
     public override void Exit()
     {
         stateMachine.Health.SetInvulnerable(false);
-        stateMachine.Controller.excludeLayers = LayerMask.GetMask("Nothing");
     }
 
     private Vector3 CalculateMovement()

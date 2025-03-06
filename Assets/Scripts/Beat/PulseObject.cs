@@ -7,8 +7,9 @@ public class PulseObject : BeatReactive
 
     private Vector3 _startSize;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _startSize = transform.localScale;
     }
 

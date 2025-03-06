@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Interval
 {
     public float Step;
-    public UnityEvent OnBeatHit;
+    public UnityAction OnBeatHit;
 
     public List<float> BeatTimes = new List<float>(); // Armazena os tempos dos beats
     private int _lastInterval;
@@ -51,40 +51,21 @@ public class BeatController : Singleton<BeatController>
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private List<Interval> _intervals;
 
-    public List<BeatTime> AllBeatTimes = new List<BeatTime>(); // Lista global para a UI
-
-    private void Start()
-    {
-        BeatReactive[] objs = FindObjectsByType<BeatReactive>(FindObjectsSortMode.None);
-        foreach (BeatReactive obj in objs)
-        {
-            Interval interval = _intervals.Find(interval => interval.Step == obj.Step);
-            if (interval != null)
-            {
-                interval.OnBeatHit.AddListener(obj.OnBeat);
-            }
-            else
-            {
-                Interval newInterval = new Interval
-                {
-                    Step = obj.Step,
-                    OnBeatHit = new UnityEvent(),
-                };
-
-                newInterval.OnBeatHit.AddListener(obj.OnBeat);
-
-                _intervals.Add(newInterval);
-            }
-        }
-    }
+    // private void Start()
+    // {
+    //     BeatReactive[] objs = FindObjectsByType<BeatReactive>(FindObjectsSortMode.None);
+    //     foreach (BeatReactive obj in objs)
+    //     {
+    //         AddBeatReactive(obj);
+    //     }
+    // }
 
     private void Update()
     {
-        float audioTime = GetAudioTime();
+        float audioTime = _audioSource.time;
 
         if (audioTime == 0 || audioTime == _audioSource.clip.length)
         {
-            CalculateAllBeats();
             _audioSource.Play();
             OnMusicStarted?.Invoke();
         }
@@ -96,22 +77,23 @@ public class BeatController : Singleton<BeatController>
         }
     }
 
-    private void CalculateAllBeats()
+    public void AddBeatReactive(BeatReactive obj)
     {
-        if (_audioSource.clip == null) return;
-
-        AllBeatTimes.Clear();
-        float songLength = _audioSource.clip.length;
-
-        foreach (Interval interval in _intervals)
+        Interval interval = _intervals.Find(interval => interval.Step == obj.Step);
+        if (interval != null)
         {
-            interval.CalculateBeatTimes(songLength, _bpm);
-            AllBeatTimes.Add(new BeatTime() { Step = interval.Step, Times = interval.BeatTimes });
+            interval.OnBeatHit += obj.OnBeat;
         }
-    }
+        else
+        {
+            Interval newInterval = new()
+            {
+                Step = obj.Step
+            };
 
-    public float GetAudioTime()
-    {
-        return _audioSource.time;
+            newInterval.OnBeatHit += obj.OnBeat;
+
+            _intervals.Add(newInterval);
+        }
     }
 }

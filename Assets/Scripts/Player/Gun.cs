@@ -1,13 +1,9 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class Gun : MonoBehaviour
 {
-    public event Action<bool> OnFireEvent;
-
-    [SerializeField] private PlayerStateMachine _player;
     [SerializeField] private Transform ShootingPoint;
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private int _damage;
@@ -15,6 +11,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private float _followSpeed;
     [SerializeField] private LayerMask GroundMask;
 
+    private PlayerStateMachine _player;
     private IObjectPool<Bullet> _bulletPool;
     private int _maxPoolSize = 20;
 
@@ -23,6 +20,7 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
+        _player = PlayerStateMachine.Instance;
         _mainCamera = Camera.main;
         _startYPostion = transform.position.y;
 
@@ -114,7 +112,6 @@ public class Gun : MonoBehaviour
     private void Fire()
     {
         bool withinBeatWindow = _player.IsWithinBeatWindow();
-        OnFireEvent?.Invoke(withinBeatWindow);
 
         Bullet bullet = _bulletPool.Get();
         bullet.Fire(withinBeatWindow, ShootingPoint.position, transform.rotation);

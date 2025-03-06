@@ -49,6 +49,12 @@ public class Health : MonoBehaviour
         _isInvulnerable = isInvulnerable;
     }
 
+    public void SetMaxHealth(int power)
+    {
+        //TODO: Pensar em uma fórmula melhor
+        CurrentMaxHealth = Mathf.Max(InitialMaxHealth * power, InitialMaxHealth);
+    }
+
     public void TakeDamage(int damage)
     {
         if (CurrentHealth == 0 || _isInvulnerable) return;

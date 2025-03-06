@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -6,6 +7,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _lifeTime = 5f;
     [SerializeField] private float _shootForce = 15;
+    [SerializeField] private int _maxHits = 5;
     [SerializeField] private string _targetTag;
     [SerializeField] private ParticleSystem _ps;
 
@@ -13,6 +15,7 @@ public class Bullet : MonoBehaviour
     private int _damage;
     private IObjectPool<Bullet> _pool;
     private float _currentLifeTime;
+    private List<Collider> _collidersAlreadyHit = new();
 
     private void Awake()
     {
@@ -64,20 +67,24 @@ public class Bullet : MonoBehaviour
     {
         _currentLifeTime = _lifeTime;
         _rb.linearVelocity = Vector3.zero;
+        _collidersAlreadyHit.Clear();
 
         _pool.Release(this);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(_targetTag))
+        bool maxHitsReached = _collidersAlreadyHit.Count >= _maxHits;
+        bool alreadyHit = _collidersAlreadyHit.Contains(other);
+        bool isTarget = other.CompareTag(_targetTag);
+
+        if (!maxHitsReached && !alreadyHit && isTarget)
         {
             if (other.TryGetComponent(out Health health))
             {
+                _collidersAlreadyHit.Add(other);
                 health.TakeDamage(_damage);
             }
         }
-
-        if (isActiveAndEnabled) Release();
     }
 }

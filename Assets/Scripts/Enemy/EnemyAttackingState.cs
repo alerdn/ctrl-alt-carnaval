@@ -1,5 +1,3 @@
-using Cysharp.Threading.Tasks;
-
 public class EnemyAttackingState : EnemyBaseState
 {
     public EnemyAttackingState(EnemyStateMachine stateMachine) : base(stateMachine)
@@ -19,12 +17,6 @@ public class EnemyAttackingState : EnemyBaseState
         }
 
         if (!IsInAttackRange())
-        {
-            stateMachine.SwitchState(new EnemyChasingState(stateMachine));
-        }
-
-        float normalizedTime = stateMachine.GetNormalizedTime(stateMachine.Animator, "Attack");
-        if (normalizedTime >= 0.9f)
         {
             stateMachine.SwitchState(new EnemyChasingState(stateMachine));
         }

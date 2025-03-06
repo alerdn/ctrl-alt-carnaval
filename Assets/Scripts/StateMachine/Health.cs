@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    public event UnityAction OnTakeDamage;
+    public event UnityAction<int> OnTakeDamage;
     public event UnityAction OnDie;
     public event UnityAction<int, int> OnHealthChanged;
     public event UnityAction<int> OnMaxHealthChanged;
@@ -60,7 +60,7 @@ public class Health : MonoBehaviour
         if (CurrentHealth == 0 || _isInvulnerable) return;
 
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-        OnTakeDamage?.Invoke();
+        OnTakeDamage?.Invoke(damage);
 
         if (CurrentHealth == 0)
         {

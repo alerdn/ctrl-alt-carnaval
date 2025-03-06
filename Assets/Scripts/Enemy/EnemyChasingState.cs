@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class EnemyChasingState : EnemyBaseState
 {
     private readonly int LocomotionHash = Animator.StringToHash("Locomotion");
+    private bool _recalculatePath;
 
     public EnemyChasingState(EnemyStateMachine stateMachine) : base(stateMachine)
     {
@@ -10,6 +12,7 @@ public class EnemyChasingState : EnemyBaseState
 
     public override void Enter()
     {
+        _recalculatePath = true;
         stateMachine.Animator.CrossFadeInFixedTime(LocomotionHash, .1f);
     }
 
@@ -20,7 +23,7 @@ public class EnemyChasingState : EnemyBaseState
             stateMachine.SwitchState(new EnemyAttackingState(stateMachine));
         }
 
-        MoveToPlayer(deltaTime);
+        _ = MoveToPlayer(deltaTime);
         FacePlayer();
     }
 
@@ -33,15 +36,16 @@ public class EnemyChasingState : EnemyBaseState
         stateMachine.Agent.velocity = Vector3.zero;
     }
 
-    private void MoveToPlayer(float deltaTime)
+    private async UniTask MoveToPlayer(float deltaTime)
     {
+        if (!_recalculatePath) return;
+
+        _recalculatePath = false;
         if (stateMachine.Agent.isOnNavMesh)
         {
             stateMachine.Agent.destination = stateMachine.Player.transform.position;
-            //Move(stateMachine.Agent.desiredVelocity.normalized * stateMachine.MovementSpeed, deltaTime);
+            await UniTask.Delay(1000);
+            _recalculatePath = true;
         }
-
-        // Atualizamos a velocity do agent porque nós estamos lidando com a movimentação manualmente
-        // stateMachine.Agent.velocity = stateMachine.CharacterController.velocity;
     }
 }

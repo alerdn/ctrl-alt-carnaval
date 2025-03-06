@@ -27,7 +27,7 @@ public class PlayerStateMachine : StateMachine
 
     private Tween _hitColorTween;
 
-    public Camera MainCamera { get; private set; }
+    public Transform MainCameraTransform { get; private set; }
     public float DashCooldownTimeStamp;
     private float _lastBeatTime;
 
@@ -38,7 +38,7 @@ public class PlayerStateMachine : StateMachine
 
     private void Start()
     {
-        MainCamera = Camera.main;
+        MainCameraTransform = Camera.main.transform;
         InputReader.SetControllerMode(ControllerMode.Gameplay);
 
         Health.OnTakeDamage += HandleTakeDamage;
@@ -69,7 +69,7 @@ public class PlayerStateMachine : StateMachine
         return success;
     }
 
-    private void HandleTakeDamage()
+    private void HandleTakeDamage(int damage)
     {
         _hitColorTween?.Kill();
         _hitColorTween = Renderer.material.DOColor(Color.red, "_Color", .1f).From(Color.white).SetLoops(2, LoopType.Yoyo);
@@ -87,8 +87,8 @@ public class PlayerStateMachine : StateMachine
 
     public Vector3 CalculeMovement()
     {
-        Vector3 forward = MainCamera.transform.forward;
-        Vector3 right = MainCamera.transform.right;
+        Vector3 forward = MainCameraTransform.forward;
+        Vector3 right = MainCameraTransform.right;
 
         forward.y = 0f;
         right.y = 0f;

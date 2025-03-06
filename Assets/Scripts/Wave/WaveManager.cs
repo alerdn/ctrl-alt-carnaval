@@ -23,7 +23,6 @@ public class WaveManager : MonoBehaviour
         get => _timeSpan;
         private set
         {
-            Debug.Log($"New Minute: {value.Minutes}, Current Minute: {_timeSpan.Minutes}");
             if (value.Minutes != _timeSpan.Minutes)
             {
                 OnMinuteChanged?.Invoke();

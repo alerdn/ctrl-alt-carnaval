@@ -11,16 +11,18 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public Health Health { get; private set; }
     [field: SerializeField] public Renderer Renderer { get; private set; }
     [field: SerializeField] public BeatComponent BeatComponent { get; private set; }
-    [field: SerializeField] public int Damage { get; private set; }
-
+    [field: SerializeField] public HitUI HitUI { get; private set; }
+    [field: SerializeField] public EXPCollectable EXPCollectablePrefab { get; private set; }
+    [field: SerializeField] public int ExpValue { get; private set; }
+    [field: SerializeField] public int InitialDamage { get; private set; }
     [field: SerializeField] public float AttackRange { get; private set; }
-    [field: SerializeField] public float MovementSpeed { get; private set; }
 
+    public int Damage { get; private set; }
     public PlayerStateMachine Player { get; private set; }
+    public IObjectPool<EXPCollectable> EXPPool { get; private set; }
     public IObjectPool<EnemyStateMachine> EnemyPool { get; private set; }
 
     private int _power;
-    private int _initialDamage;
     private Tween _hitColorTween;
 
     private void OnEnable()
@@ -42,7 +44,7 @@ public class EnemyStateMachine : StateMachine
         Agent.updatePosition = true;
         Agent.updateRotation = false;
 
-        _initialDamage = Damage;
+        EXPPool = new LinkedPool<EXPCollectable>(OnCreate, OnTakeFromPool, OnReturnToPool, OnDestroyItem, true);
     }
 
     public void Init(Vector3 position, int power)
@@ -78,11 +80,13 @@ public class EnemyStateMachine : StateMachine
     private int GetDamage(int power)
     {
         //TODO: Pensar em uma fórmula melhor
-        return Mathf.Max(_initialDamage * power, _initialDamage);
+        return Mathf.Max(InitialDamage * power, InitialDamage);
     }
 
-    private void HandleTakeDamage()
+    private void HandleTakeDamage(int damage)
     {
+        HitUI.ShowHitText(damage.ToString());
+
         _hitColorTween?.Kill();
         _hitColorTween = Renderer.material.DOColor(Color.red, "_Color", .1f).From(Color.white).SetLoops(2, LoopType.Yoyo);
     }
@@ -91,6 +95,36 @@ public class EnemyStateMachine : StateMachine
     {
         SwitchState(new EnemyDeadState(this));
     }
+
+    #region Pool
+
+    private EXPCollectable OnCreate()
+    {
+        EXPCollectable exp = Instantiate(EXPCollectablePrefab);
+        exp.gameObject.SetActive(false);
+
+        exp.SetPool(EXPPool);
+
+        return exp;
+    }
+
+    private void OnTakeFromPool(EXPCollectable exp)
+    {
+        exp.gameObject.SetActive(true);
+        exp.Init(ExpValue, transform.position);
+    }
+
+    private void OnReturnToPool(EXPCollectable exp)
+    {
+        exp.gameObject.SetActive(false);
+    }
+
+    private void OnDestroyItem(EXPCollectable exp)
+    {
+        Destroy(exp.gameObject);
+    }
+
+    #endregion
 
     private void OnDrawGizmosSelected()
     {

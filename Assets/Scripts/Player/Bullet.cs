@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -12,7 +11,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private ParticleSystem _ps;
 
     private Rigidbody _rb;
-    private int _damage;
+    [SerializeField] private int _damage;
     private IObjectPool<Bullet> _pool;
     private float _currentLifeTime;
     private List<Collider> _collidersAlreadyHit = new();
@@ -39,10 +38,14 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void Init(int damage, IObjectPool<Bullet> bulletPool)
+    public void SetPool(IObjectPool<Bullet> pool)
+    {
+        _pool = pool;
+    }
+
+    public void Init(int damage)
     {
         _damage = damage;
-        _pool = bulletPool;
     }
 
     public void Fire(bool onBeat, Vector3 position, Quaternion rotation)

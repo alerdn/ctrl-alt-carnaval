@@ -49,13 +49,14 @@ public class Gun : MonoBehaviour
         Bullet bullet = Instantiate(_bulletPrefab, ShootingPoint.position, Quaternion.identity);
         bullet.gameObject.SetActive(false);
 
-        bullet.Init(_damage, _bulletPool);
+        bullet.SetPool(_bulletPool);
 
         return bullet;
     }
 
     private void OnTakeFromPool(Bullet bullet)
     {
+        bullet.Init(_damage + Random.Range(-9, 9));
         bullet.gameObject.SetActive(true);
     }
 

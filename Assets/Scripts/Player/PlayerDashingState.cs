@@ -49,8 +49,8 @@ public class PlayerDashingState : PlayerBaseState
     private Vector3 CalculateMovement()
     {
         Vector3 movement = new Vector3();
-        Vector3 forward = stateMachine.MainCamera.transform.forward;
-        Vector3 right = stateMachine.MainCamera.transform.right;
+        Vector3 forward = stateMachine.MainCameraTransform.forward;
+        Vector3 right = stateMachine.MainCameraTransform.right;
 
         forward.y = 0f;
         right.y = 0f;

@@ -44,6 +44,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Vector2 _xBoudries = new(-25f, 25f);
     [SerializeField] private Vector2 _yBoudries = new(-25f, 25f);
 
+    private List<EnemyStateMachine> _enemies = new();
     private IObjectPool<EnemyStateMachine> _enemyPool;
     private TimeSpan _timeSpan;
 
@@ -65,6 +66,14 @@ public class WaveManager : MonoBehaviour
     {
         CurrentTimeSpan += TimeSpan.FromSeconds(Time.deltaTime);
         _clock.Value = $"{CurrentTimeSpan.Minutes:D2}:{CurrentTimeSpan.Seconds:D2}";
+
+        foreach (var enemy in _enemies)
+        {
+            if (enemy.gameObject.activeInHierarchy)
+            {
+                enemy.Tick(Time.deltaTime);
+            }
+        }
     }
 
     private void SpawnWave()
@@ -84,7 +93,13 @@ public class WaveManager : MonoBehaviour
             {
                 for (int j = 0; j < enemiesPerSubWave; j++)
                 {
-                    _enemyPool.Get();
+                    var enemy = _enemyPool.Get();
+                    if (!_enemies.Contains(enemy))
+                    {
+                        _enemies.Add(enemy);
+                    }
+
+                    await UniTask.WaitForEndOfFrame();
                 }
                 await UniTask.Delay(60000 / wave.EnemiesSubWaveCount);
             }

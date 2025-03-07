@@ -48,6 +48,12 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerFreeLookState(this));
     }
 
+    private void Update()
+    {
+        currentState?.Tick(Time.deltaTime);
+    }
+
+
     private void OnDestroy()
     {
         Health.OnTakeDamage -= HandleTakeDamage;

@@ -2,18 +2,13 @@ using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
-    private State _currentState;
+    protected State currentState;
 
     public void SwitchState(State newState)
     {
-        _currentState?.Exit();
-        _currentState = newState;
-        _currentState?.Enter();
-    }
-
-    protected virtual void Update()
-    {
-        _currentState?.Tick(Time.deltaTime);
+        currentState?.Exit();
+        currentState = newState;
+        currentState?.Enter();
     }
 
     public float GetNormalizedTime(Animator animator, string tag)

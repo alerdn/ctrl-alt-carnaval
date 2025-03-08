@@ -22,7 +22,6 @@ public class EnemyStateMachine : StateMachine
     public IObjectPool<EXPCollectable> EXPPool { get; private set; }
     public IObjectPool<EnemyStateMachine> EnemyPool { get; private set; }
 
-    private int _power;
     private Tween _hitColorTween;
 
     private void OnEnable()
@@ -47,14 +46,8 @@ public class EnemyStateMachine : StateMachine
         EXPPool = new LinkedPool<EXPCollectable>(OnCreate, OnTakeFromPool, OnReturnToPool, OnDestroyItem, true);
     }
 
-    public void Tick(float deltaTime)
-    {
-        currentState?.Tick(deltaTime);
-    }
-
     public void Init(Vector3 position, int power)
     {
-        _power = power;
         Health.SetMaxHealth(power);
         Health.RestoreHealth();
 

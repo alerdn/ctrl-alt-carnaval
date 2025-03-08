@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <InputReader>k__BackingField: {fileID: 11400000, guid: 9cfae473b86177948a385dc3abaa17e5, type: 2}
+  <Gun>k__BackingField: {fileID: 0}
   <Controller>k__BackingField: {fileID: 8971905233270831842}
   <Animator>k__BackingField: {fileID: 2571415132476955105}
   <Health>k__BackingField: {fileID: 1827587357263120450}
@@ -114,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f19d1e8b360a9243ad920be2c88ff5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialMaxHealth: 100
+  _initialMaxHealth: 500
   _health: 0
   _currentMaxHealth: 0
 --- !u!114 &5620323793596279876

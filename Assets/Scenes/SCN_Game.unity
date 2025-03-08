@@ -4979,6 +4979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f94e5899ee5c14baab928fe2d88b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Level: {fileID: 11400000, guid: bb366c5d704f0754ba2e3249dc896f38, type: 2}
   EXP: {fileID: 11400000, guid: 405bf422c81bcae49a02e1bfef71272b, type: 2}
   _experienceToNextLevel: 100
 --- !u!1001 &490491287
@@ -18202,7 +18203,7 @@ MonoBehaviour:
   _clock: {fileID: 11400000, guid: 92719870b25ec62478e96cd437b247d4, type: 2}
   _waves:
   - WaveNumber: 0
-    EnemiesCount: 600
+    EnemiesCount: 120
     EnemiesSubWaveCount: 6
   - WaveNumber: 1
     EnemiesCount: 180
@@ -18216,6 +18217,7 @@ MonoBehaviour:
   _outerRadius: 18
   _xBoudries: {x: -25, y: 75}
   _yBoudries: {x: -25, y: 75}
+  _maxEnemiesSpawned: 100
 --- !u!1001 &2133775836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18594,9 +18596,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 764129547}
     m_Modifications:
-    - target: {fileID: 987395009883394126, guid: 8a38bea4190ab844d960ccb8e89ef914, type: 3}
-      propertyPath: _initialMaxHealth
-      value: 500
+    - target: {fileID: 2740162735790166733, guid: 8a38bea4190ab844d960ccb8e89ef914, type: 3}
+      propertyPath: <BeatThreshold>k__BackingField
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2740162735790166733, guid: 8a38bea4190ab844d960ccb8e89ef914, type: 3}
+      propertyPath: <FreeLookMovement>k__BackingField
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4730889164929655764, guid: 8a38bea4190ab844d960ccb8e89ef914, type: 3}
       propertyPath: m_Name

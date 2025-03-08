@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShootingPoint: {fileID: 3829940551124884405}
   _bulletPrefab: {fileID: 2819637699459930086, guid: 2d556f9efb0f00c468467299303aeda0, type: 3}
-  _damage: 30
+  _initialDamage: 15
+  _damageRange: {x: -5, y: 5}
   _range: 1
   _followSpeed: 6
   GroundMask:

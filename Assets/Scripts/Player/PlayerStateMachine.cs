@@ -11,6 +11,7 @@ public class PlayerStateMachine : StateMachine
 
     [field: SerializeField] public InputReader InputReader { get; private set; }
 
+    [field: SerializeField] public Gun Gun { get; private set; }
     [field: SerializeField] public CharacterController Controller { get; private set; }
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public Health Health { get; private set; }
@@ -41,18 +42,14 @@ public class PlayerStateMachine : StateMachine
         MainCameraTransform = Camera.main.transform;
         InputReader.SetControllerMode(ControllerMode.Gameplay);
 
+        Gun.Init(this);
+
         Health.OnTakeDamage += HandleTakeDamage;
         Health.OnDie += HandleDie;
         BeatComp.OnBeatAction += HandleBeat;
 
         SwitchState(new PlayerFreeLookState(this));
     }
-
-    private void Update()
-    {
-        currentState?.Tick(Time.deltaTime);
-    }
-
 
     private void OnDestroy()
     {
@@ -114,5 +111,13 @@ public class PlayerStateMachine : StateMachine
     public void Move(Vector3 motion, float deltaTime)
     {
         Controller.Move((motion + ForceReceiver.Movement) * deltaTime);
+    }
+
+    public void PowerUp(int level)
+    {
+        Health.SetMaxHealth(level);
+        Health.RestoreHealth(Mathf.RoundToInt(Health.CurrentMaxHealth * .1f));
+
+        Gun.SetDamage(level);
     }
 }

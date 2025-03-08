@@ -4,6 +4,12 @@ public abstract class StateMachine : MonoBehaviour
 {
     protected State currentState;
 
+    protected void Update()
+    {
+        currentState?.Tick(Time.deltaTime);
+    }
+
+
     public void SwitchState(State newState)
     {
         currentState?.Exit();

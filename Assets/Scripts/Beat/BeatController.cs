@@ -45,20 +45,9 @@ public record BeatTime
 
 public class BeatController : Singleton<BeatController>
 {
-    public UnityAction OnMusicStarted;
-
     [SerializeField] private float _bpm;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private List<Interval> _intervals;
-
-    // private void Start()
-    // {
-    //     BeatReactive[] objs = FindObjectsByType<BeatReactive>(FindObjectsSortMode.None);
-    //     foreach (BeatReactive obj in objs)
-    //     {
-    //         AddBeatReactive(obj);
-    //     }
-    // }
 
     private void Update()
     {
@@ -67,7 +56,6 @@ public class BeatController : Singleton<BeatController>
         if (audioTime == 0 || audioTime == _audioSource.clip.length)
         {
             _audioSource.Play();
-            OnMusicStarted?.Invoke();
         }
 
         foreach (Interval interval in _intervals)

@@ -99,6 +99,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 662852674998292071, guid: 5c8b01940d604a0488e6ea92b650643f, type: 3}
   m_PrefabInstance: {fileID: 1069418697088215414}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3363454492954939426 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2340238661743802708, guid: 5c8b01940d604a0488e6ea92b650643f, type: 3}
+  m_PrefabInstance: {fileID: 1069418697088215414}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac52c0ca47ca98448551b39efbf563c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1508437057607702540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,6 +122,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PFB_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3668191785474525889, guid: d4c4fd047c4b7f946a2791d644ab923b, type: 3}
+      propertyPath: <Gun>k__BackingField
+      value: 
+      objectReference: {fileID: 3363454492954939426}
     - target: {fileID: 7627985087523545075, guid: d4c4fd047c4b7f946a2791d644ab923b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -150,14 +165,6 @@ PrefabInstance:
     - target: {fileID: 7627985087523545075, guid: d4c4fd047c4b7f946a2791d644ab923b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8971905233270831842, guid: d4c4fd047c4b7f946a2791d644ab923b, type: 3}
-      propertyPath: m_Height
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8971905233270831842, guid: d4c4fd047c4b7f946a2791d644ab923b, type: 3}
-      propertyPath: m_Center.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

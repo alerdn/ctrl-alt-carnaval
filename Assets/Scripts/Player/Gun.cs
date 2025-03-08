@@ -6,11 +6,13 @@ public class Gun : MonoBehaviour
 {
     [SerializeField] private Transform ShootingPoint;
     [SerializeField] private Bullet _bulletPrefab;
-    [SerializeField] private int _damage;
+    [SerializeField] private int _initialDamage;
+    [SerializeField] private Vector2 _damageRange;
     [SerializeField] private float _range;
     [SerializeField] private float _followSpeed;
     [SerializeField] private LayerMask GroundMask;
 
+    private int _damage;
     private PlayerStateMachine _player;
     private IObjectPool<Bullet> _bulletPool;
     private int _maxPoolSize = 20;
@@ -20,13 +22,11 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
-        _player = PlayerStateMachine.Instance;
         _mainCamera = Camera.main;
         _startYPostion = transform.position.y;
+        _damage = _initialDamage;
 
         transform.DOMoveY(_startYPostion + .1f, 1f).From(_startYPostion - .1f).SetLoops(-1, LoopType.Yoyo);
-
-        _player.InputReader.FireEvent += Fire;
 
         _bulletPool = new LinkedPool<Bullet>(OnCreateBullet, OnTakeFromPool, OnReturnToPool, OnDestroyBullet, true, _maxPoolSize);
     }
@@ -40,6 +40,17 @@ public class Gun : MonoBehaviour
     {
         MoveToPlayer();
         Aim();
+    }
+
+    public void Init(PlayerStateMachine player)
+    {
+        _player = player;
+        _player.InputReader.FireEvent += Fire;
+    }
+
+    public void SetDamage(int power)
+    {
+        _damage = Mathf.Max(_initialDamage * power, _initialDamage);
     }
 
     #region Bullet Pool
@@ -56,7 +67,8 @@ public class Gun : MonoBehaviour
 
     private void OnTakeFromPool(Bullet bullet)
     {
-        bullet.Init(_damage + Random.Range(-9, 9));
+        int modifier = Mathf.RoundToInt(Random.Range(_damageRange.x, _damageRange.y));
+        bullet.Init(_damage + modifier);
         bullet.gameObject.SetActive(true);
     }
 

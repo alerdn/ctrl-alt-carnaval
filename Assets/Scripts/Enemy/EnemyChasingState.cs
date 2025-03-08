@@ -44,7 +44,7 @@ public class EnemyChasingState : EnemyBaseState
         if (stateMachine.Agent.isOnNavMesh)
         {
             stateMachine.Agent.destination = stateMachine.Player.transform.position;
-            await UniTask.Delay(1000);
+            await UniTask.Delay(500);
             _recalculatePath = true;
         }
     }

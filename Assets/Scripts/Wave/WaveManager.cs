@@ -43,6 +43,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float _outerRadius = 3f; // Raio do círculo maior
     [SerializeField] private Vector2 _xBoudries = new(-25f, 25f);
     [SerializeField] private Vector2 _yBoudries = new(-25f, 25f);
+    [SerializeField] private int _maxEnemiesSpawned = 100;
 
     private List<EnemyStateMachine> _enemies = new();
     private IObjectPool<EnemyStateMachine> _enemyPool;
@@ -66,14 +67,6 @@ public class WaveManager : MonoBehaviour
     {
         CurrentTimeSpan += TimeSpan.FromSeconds(Time.deltaTime);
         _clock.Value = $"{CurrentTimeSpan.Minutes:D2}:{CurrentTimeSpan.Seconds:D2}";
-
-        foreach (var enemy in _enemies)
-        {
-            if (enemy.gameObject.activeInHierarchy)
-            {
-                enemy.Tick(Time.deltaTime);
-            }
-        }
     }
 
     private void SpawnWave()
@@ -93,6 +86,8 @@ public class WaveManager : MonoBehaviour
             {
                 for (int j = 0; j < enemiesPerSubWave; j++)
                 {
+                    if (_enemies.FindAll(enemy => enemy.isActiveAndEnabled).Count >= _maxEnemiesSpawned) continue;
+
                     var enemy = _enemyPool.Get();
                     if (!_enemies.Contains(enemy))
                     {
@@ -138,6 +133,7 @@ public class WaveManager : MonoBehaviour
 
     private void OnTakeFromPool(EnemyStateMachine enemy)
     {
+        enemy.Animator.gameObject.SetActive(true);
         enemy.gameObject.SetActive(true);
         enemy.Init(GetRandomPointInRing(), CurrentTimeSpan.Minutes);
     }

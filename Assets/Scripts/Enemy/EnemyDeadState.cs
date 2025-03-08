@@ -10,6 +10,7 @@ public class EnemyDeadState : EnemyBaseState
     {
         stateMachine.EXPPool.Get();
         stateMachine.Animator.gameObject.SetActive(false);
+        _ = Die();
     }
 
     public override void Tick(float deltaTime)

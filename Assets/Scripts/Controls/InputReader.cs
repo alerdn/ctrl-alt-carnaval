@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -7,7 +6,8 @@ using static Controls;
 public enum ControllerMode
 {
     Gameplay,
-    UI
+    UI,
+    None
 }
 
 [CreateAssetMenu(fileName = "InputReader", menuName = "InputReader")]
@@ -42,6 +42,10 @@ public class InputReader : ScriptableObject, IPlayerActions, IUIActions
             case ControllerMode.UI:
                 _controls.Player.Disable();
                 _controls.UI.Enable();
+                break;
+            case ControllerMode.None:
+                _controls.Player.Disable();
+                _controls.UI.Disable();
                 break;
         }
     }

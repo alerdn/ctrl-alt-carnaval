@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4658436968346233497}
   - component: {fileID: 3185767765310757073}
   - component: {fileID: 2654649969164371957}
+  - component: {fileID: -2623477459188979868}
   m_Layer: 0
   m_Name: PFB_Exp
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6014486396968806801}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.4346, y: 0.5, z: 17.547829}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -67,6 +68,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8bf048ce320c5d4cb0182b0f1f97d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2623477459188979868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014486396968806801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83205d2f52ac7314f8428474db4e02f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Step>k__BackingField: 4
+  _pulseSize: 2
+  _returnSpeed: 5
 --- !u!1 &7194148377689196846
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,14 +8,24 @@ public class HUD : MonoBehaviour
 {
     [SerializeField] private Image _centerImage;
     [SerializeField] private Gun _gun;
+
+    [Header("HP")]
     [SerializeField] private Image _lifeBarAux;
     [SerializeField] private Image _lifeBar;
+
+    [Header("xp")]
+    [SerializeField] private Image _expBar;
+    [SerializeField] private SOInt _exp;
+
+    [Header("Combo")]
     [SerializeField] private Image _comboBar;
+    [SerializeField] private TMP_Text _comboIcon;
     [SerializeField] private TMP_Text _comboText;
 
     private Tween _lifeBarTween;
     [SerializeField] private float _comboPoints;
     private string[] _comboIcons = new string[] { "", "E", "D", "C", "B", "A", "S" };
+    private string[] _comboTexts = new string[] { "", "stiloso", "emais!", "abuloso!!", "ota pra\nquebrar!", "rrasando!!", "ensacional!!!" };
     private int _currentComboIndex = 0;
 
     private void Start()
@@ -23,10 +33,12 @@ public class HUD : MonoBehaviour
         _comboPoints = 0;
         _comboBar.fillAmount = 0;
         _currentComboIndex = 0;
-        _comboText.text = _comboIcons[_currentComboIndex];
+        _comboIcon.text = _comboIcons[_currentComboIndex];
+        _comboText.text = _comboTexts[_currentComboIndex];
 
         PlayerStateMachine.Instance.OnBeatAction += VerifyBeat;
         PlayerStateMachine.Instance.Health.OnHealthChanged += UpdateLifeBar;
+        _exp.OnValueChanged += UpdateEXPBar;
 
         UpdateLifeBar(PlayerStateMachine.Instance.Health.CurrentHealth, PlayerStateMachine.Instance.Health.CurrentMaxHealth);
     }
@@ -35,6 +47,7 @@ public class HUD : MonoBehaviour
     {
         PlayerStateMachine.Instance.OnBeatAction -= VerifyBeat;
         PlayerStateMachine.Instance.Health.OnHealthChanged -= UpdateLifeBar;
+        _exp.OnValueChanged -= UpdateEXPBar;
     }
 
     private void UpdateLifeBar(int currentHP, int maxHP)
@@ -43,6 +56,11 @@ public class HUD : MonoBehaviour
 
         _lifeBarTween?.Kill();
         _lifeBarTween = _lifeBarAux.DOFillAmount((float)currentHP / maxHP, .5f).SetDelay(1f);
+    }
+
+    private void UpdateEXPBar(int exp)
+    {
+        _expBar.fillAmount = (float)exp / (float)ExperienceManager.Instance.ExperienceToNextLevel;
     }
 
     private void VerifyBeat(bool success)
@@ -54,7 +72,6 @@ public class HUD : MonoBehaviour
             if (_comboPoints == 5)
             {
                 _currentComboIndex = Mathf.Clamp(_currentComboIndex + 1, 0, _comboIcons.Length - 1);
-                _comboText.text = _comboIcons[_currentComboIndex];
 
                 _comboPoints = 0;
             }
@@ -66,7 +83,7 @@ public class HUD : MonoBehaviour
             if (_comboPoints == 0)
             {
                 _currentComboIndex = Mathf.Clamp(_currentComboIndex - 1, 0, _comboIcons.Length - 1);
-                _comboText.text = _comboIcons[_currentComboIndex];
+                _comboIcon.text = _comboIcons[_currentComboIndex];
 
                 if (_currentComboIndex == 0)
                     _comboPoints = 0;
@@ -75,6 +92,8 @@ public class HUD : MonoBehaviour
 
         }
 
+        _comboIcon.text = _comboIcons[_currentComboIndex];
+        _comboText.text = _comboTexts[_currentComboIndex];
         _comboBar.fillAmount = _comboPoints / 5f;
     }
 }

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class EnemyAttackingState : EnemyBaseState
 {
     public EnemyAttackingState(EnemyStateMachine stateMachine) : base(stateMachine)
@@ -31,6 +33,8 @@ public class EnemyAttackingState : EnemyBaseState
 
     private void Attack()
     {
+        if (Time.timeScale == 0) return;
+
         AudioManager.Instance.PlayCue("EnemyAttack");
         stateMachine.Animator.CrossFadeInFixedTime("Attack", 0.1f);
         if (IsInAttackRange())

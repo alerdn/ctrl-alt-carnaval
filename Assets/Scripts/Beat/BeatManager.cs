@@ -43,7 +43,7 @@ public record BeatTime
     public List<float> Times;
 }
 
-public class BeatController : Singleton<BeatController>
+public class BeatManager : Singleton<BeatManager>
 {
     [SerializeField] private float _bpm;
     [SerializeField] private AudioSource _audioSource;

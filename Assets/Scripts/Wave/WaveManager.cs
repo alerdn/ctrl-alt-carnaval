@@ -12,6 +12,15 @@ public record WaveConfig
     public int WaveNumber;
     public int EnemiesCount;
     public int EnemiesSubWaveCount;
+    public float TotalEXP;
+}
+
+[Serializable]
+public struct EnemyData
+{
+    public EnemyStateMachine Enemy;
+    [Range(0.1f, 1f)]
+    public float Probability;
 }
 
 public class WaveManager : MonoBehaviour
@@ -36,7 +45,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private SOString _clock;
     [SerializeField] private List<WaveConfig> _waves;
     [SerializeField] private Transform _enemiesContainer;
-    [SerializeField] private EnemyStateMachine _enemyPrefab;
+    [SerializeField] private List<EnemyData> _enemiesData;
 
     [Header("Spawn Points")]
     [SerializeField] private float _innerRadius = 1f; // Raio do círculo menor (excluído)
@@ -71,12 +80,22 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnWave()
     {
+        foreach (var enemy in _enemies)
+        {
+            if (enemy.isActiveAndEnabled)
+            {
+                enemy.PowerUp(CurrentTimeSpan.Minutes);
+            }
+        }
+
         _ = SpawnWaveTask();
     }
 
     private async UniTask SpawnWaveTask()
     {
         await UniTask.Delay(1000);
+
+        int maxEnemiesAmountToSpawn = Mathf.Max(_maxEnemiesSpawned - _enemies.FindAll(enemy => enemy.isActiveAndEnabled).Count, 0);
 
         WaveConfig wave = _waves.FindLast(wave => CurrentTimeSpan.Minutes >= wave.WaveNumber);
         if (wave != null)
@@ -86,9 +105,16 @@ public class WaveManager : MonoBehaviour
             {
                 for (int j = 0; j < enemiesPerSubWave; j++)
                 {
-                    if (_enemies.FindAll(enemy => enemy.isActiveAndEnabled).Count >= _maxEnemiesSpawned) continue;
+                    if (maxEnemiesAmountToSpawn == 0)
+                    {
+                        break;
+                    }
 
                     var enemy = _enemyPool.Get();
+                    maxEnemiesAmountToSpawn--;
+
+                    enemy.SetEXP(wave.TotalEXP / (float)wave.EnemiesCount);
+
                     if (!_enemies.Contains(enemy))
                     {
                         _enemies.Add(enemy);
@@ -123,7 +149,11 @@ public class WaveManager : MonoBehaviour
 
     private EnemyStateMachine OnCreateEnemy()
     {
-        EnemyStateMachine enemy = Instantiate(_enemyPrefab, _enemiesContainer);
+        float probability = Random.Range(0f, 1f);
+        EnemyData? data = _enemiesData.FindLast(data => data.Probability <= probability);
+        EnemyStateMachine prefab = data?.Enemy ?? _enemiesData[0].Enemy;
+
+        EnemyStateMachine enemy = Instantiate(prefab, _enemiesContainer);
         enemy.SetPool(_enemyPool);
 
         enemy.gameObject.SetActive(false);

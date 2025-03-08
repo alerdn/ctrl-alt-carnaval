@@ -115,9 +115,11 @@ public class PlayerStateMachine : StateMachine
 
     public void PowerUp(int level)
     {
-        Health.SetMaxHealth(level);
+        int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * (float)level / 2f);
+        Health.SetMaxHealth(maxHealth);
         Health.RestoreHealth(Mathf.RoundToInt(Health.CurrentMaxHealth * .1f));
 
-        Gun.SetDamage(level);
+        int damage = Gun.InitialDamage * level;
+        //Gun.SetDamage(damage);
     }
 }

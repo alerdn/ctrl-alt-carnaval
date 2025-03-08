@@ -4,6 +4,9 @@ using UnityEngine.Pool;
 
 public class Gun : MonoBehaviour
 {
+    public int InitialDamage => _initialDamage;
+    public int Damage => _damage;
+
     [SerializeField] private Transform ShootingPoint;
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private int _initialDamage;
@@ -24,7 +27,7 @@ public class Gun : MonoBehaviour
     {
         _mainCamera = Camera.main;
         _startYPostion = transform.position.y;
-        _damage = _initialDamage;
+        SetDamage(_initialDamage);
 
         transform.DOMoveY(_startYPostion + .1f, 1f).From(_startYPostion - .1f).SetLoops(-1, LoopType.Yoyo);
 
@@ -48,9 +51,9 @@ public class Gun : MonoBehaviour
         _player.InputReader.FireEvent += Fire;
     }
 
-    public void SetDamage(int power)
+    public void SetDamage(int damage)
     {
-        _damage = Mathf.Max(_initialDamage * power, _initialDamage);
+        _damage = Mathf.Max(damage, _initialDamage);
     }
 
     #region Bullet Pool

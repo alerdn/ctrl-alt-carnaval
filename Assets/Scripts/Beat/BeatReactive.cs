@@ -8,6 +8,6 @@ public abstract class BeatReactive : MonoBehaviour
 
     protected virtual void Start()
     {
-        BeatController.Instance.AddBeatReactive(this);
+        BeatManager.Instance.AddBeatReactive(this);
     }
 }

@@ -20,7 +20,7 @@ public class HitElement : MonoBehaviour
     {
         gameObject.SetActive(true);
         _text.text = text;
-        // _ = Release();
+        
         _canvasGroup.transform.DOPunchScale(Vector3.one * .5f, .1f);
         _canvasGroup.DOFade(1f, .1f).From(0f).SetEase(Ease.InFlash).OnComplete(() =>
         {
@@ -29,11 +29,5 @@ public class HitElement : MonoBehaviour
                 _hitElementPool.Release(this);
             });
         });
-    }
-
-    private async UniTask Release()
-    {
-        await UniTask.Delay(1000);
-        _hitElementPool.Release(this);
     }
 }

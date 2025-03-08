@@ -5,9 +5,11 @@ public class ExperienceManager : Singleton<ExperienceManager>
 {
     public UnityAction OnLevelUp;
 
+    public int ExperienceToNextLevel => _experienceToNextLevel;
+
     [SerializeField] private SOInt Level;
     [SerializeField] private SOInt EXP;
-    [SerializeField] private int _experienceToNextLevel = 10;
+    [SerializeField] private int _experienceToNextLevel;
 
     private PlayerStateMachine _player;
 
@@ -29,9 +31,8 @@ public class ExperienceManager : Singleton<ExperienceManager>
 
     private void LevelUp()
     {
-        EXP.Value -= _experienceToNextLevel;
-        _experienceToNextLevel = (int)(_experienceToNextLevel * 1.5f);
         Level.Value++;
+        EXP.Value -= _experienceToNextLevel;
 
         // Melhorar o personagem
         _player.PowerUp(Level.Value);

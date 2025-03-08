@@ -48,15 +48,8 @@ public class EnemyStateMachine : StateMachine
 
     public void Init(Vector3 position, int power)
     {
-        Health.SetMaxHealth(power);
-        Health.RestoreHealth();
-
-        Damage = GetDamage(power);
-
-        // Resetando posição
-        // CharacterController.enabled = false;
+        PowerUp(power);
         transform.position = position;
-        // CharacterController.enabled = true;
 
         // Resetando agent
         Agent.enabled = false;
@@ -70,15 +63,29 @@ public class EnemyStateMachine : StateMachine
         SwitchState(new EnemyChasingState(this));
     }
 
+    public void PowerUp(int power)
+    {
+        int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * power * 1.5f);
+        Health.SetMaxHealth(maxHealth);
+        Health.RestoreHealth();
+
+        int damage = InitialDamage * power * 2;
+        SetDamage(damage);
+    }
+
     public void SetPool(IObjectPool<EnemyStateMachine> enemyPool)
     {
         EnemyPool = enemyPool;
     }
 
-    private int GetDamage(int power)
+    private void SetDamage(int damage)
     {
-        //TODO: Pensar em uma fórmula melhor
-        return Mathf.Max(InitialDamage * power, InitialDamage);
+        Damage = Mathf.Max(damage, InitialDamage);
+    }
+
+    public void SetEXP(float exp)
+    {
+        ExpValue = Mathf.Max(Mathf.RoundToInt(exp), 1);
     }
 
     private void HandleTakeDamage(int damage)

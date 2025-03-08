@@ -27,6 +27,7 @@ public class HUD : MonoBehaviour
     private string[] _comboIcons = new string[] { "", "E", "D", "C", "B", "A", "S" };
     private string[] _comboTexts = new string[] { "", "stiloso", "emais!", "abuloso!!", "ota pra\nquebrar!", "rrasando!!", "ensacional!!!" };
     private int _currentComboIndex = 0;
+    private float _lastComboTime;
 
     private void Start()
     {
@@ -41,6 +42,7 @@ public class HUD : MonoBehaviour
         _exp.OnValueChanged += UpdateEXPBar;
 
         UpdateLifeBar(PlayerStateMachine.Instance.Health.CurrentHealth, PlayerStateMachine.Instance.Health.CurrentMaxHealth);
+        UpdateEXPBar(_exp.Value);
     }
 
     private void OnDestroy()
@@ -48,6 +50,15 @@ public class HUD : MonoBehaviour
         PlayerStateMachine.Instance.OnBeatAction -= VerifyBeat;
         PlayerStateMachine.Instance.Health.OnHealthChanged -= UpdateLifeBar;
         _exp.OnValueChanged -= UpdateEXPBar;
+    }
+
+    private void Update()
+    {
+        if (Time.time - _lastComboTime > 2.5f)
+        {
+            _comboPoints = Mathf.Max(_comboPoints - 1, 0);
+            UpdateComboBar();
+        }
     }
 
     private void UpdateLifeBar(int currentHP, int maxHP)
@@ -68,32 +79,37 @@ public class HUD : MonoBehaviour
         if (success)
         {
             _comboPoints = Mathf.Min(_comboPoints + 1, 5);
-
-            if (_comboPoints == 5)
-            {
-                _currentComboIndex = Mathf.Clamp(_currentComboIndex + 1, 0, _comboIcons.Length - 1);
-
-                _comboPoints = 0;
-            }
+            UpdateComboBar();
         }
         else
         {
             _comboPoints = Mathf.Max(_comboPoints - 1, 0);
+            UpdateComboBar();
+        }
+    }
 
-            if (_comboPoints == 0)
-            {
-                _currentComboIndex = Mathf.Clamp(_currentComboIndex - 1, 0, _comboIcons.Length - 1);
-                _comboIcon.text = _comboIcons[_currentComboIndex];
+    private void UpdateComboBar()
+    {
+        if (_comboPoints == 5)
+        {
+            _currentComboIndex = Mathf.Clamp(_currentComboIndex + 1, 0, _comboIcons.Length - 1);
+            _comboPoints = 0;
+        }
 
-                if (_currentComboIndex == 0)
-                    _comboPoints = 0;
-                else _comboPoints = 4;
-            }
+        else if (_comboPoints == 0)
+        {
+            _currentComboIndex = Mathf.Clamp(_currentComboIndex - 1, 0, _comboIcons.Length - 1);
+            _comboIcon.text = _comboIcons[_currentComboIndex];
 
+            if (_currentComboIndex == 0)
+                _comboPoints = 0;
+            else _comboPoints = 4;
         }
 
         _comboIcon.text = _comboIcons[_currentComboIndex];
         _comboText.text = _comboTexts[_currentComboIndex];
         _comboBar.fillAmount = _comboPoints / 5f;
+
+        _lastComboTime = Time.time;
     }
 }

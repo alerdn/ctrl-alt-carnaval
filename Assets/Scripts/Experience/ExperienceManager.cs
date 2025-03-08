@@ -13,11 +13,18 @@ public class ExperienceManager : Singleton<ExperienceManager>
 
     private PlayerStateMachine _player;
 
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Level.Value = 1;
+        EXP.Value = 0;
+    }
+
     private void Start()
     {
         _player = PlayerStateMachine.Instance;
-        Level.Value = 1;
-        EXP.Value = 0;
     }
 
     public void AddExperience(int amount)

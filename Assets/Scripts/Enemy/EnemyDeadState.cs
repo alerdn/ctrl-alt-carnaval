@@ -1,4 +1,5 @@
-using Cysharp.Threading.Tasks;
+using System.Collections;
+using UnityEngine;
 
 public class EnemyDeadState : EnemyBaseState
 {
@@ -10,7 +11,7 @@ public class EnemyDeadState : EnemyBaseState
     {
         stateMachine.EXPPool.Get();
         stateMachine.Animator.gameObject.SetActive(false);
-        _ = Die();
+        stateMachine.StartCoroutine(DieRoutine());
     }
 
     public override void Tick(float deltaTime)
@@ -21,9 +22,10 @@ public class EnemyDeadState : EnemyBaseState
     {
     }
 
-    private async UniTask Die()
+    private IEnumerator DieRoutine()
     {
-        await UniTask.Delay(1000);
-        stateMachine.EnemyPool.Release(stateMachine);
+        yield return new WaitForSeconds(1f);
+        if (stateMachine.EnemyPool == null) Object.Destroy(stateMachine.gameObject);
+        else stateMachine.EnemyPool.Release(stateMachine);
     }
 }

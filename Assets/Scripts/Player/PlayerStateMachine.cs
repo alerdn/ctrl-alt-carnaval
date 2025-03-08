@@ -22,8 +22,8 @@ public class PlayerStateMachine : StateMachine
 
     [field: SerializeField] public float FreeLookMovement { get; private set; }
     [field: SerializeField] public float RotationDamping { get; private set; }
-    [field: SerializeField] public float DodgeDuration { get; private set; }
-    [field: SerializeField] public float DodgeLength { get; private set; }
+    [field: SerializeField] public float DashDuration { get; private set; }
+    [field: SerializeField] public float DashLength { get; private set; }
     [field: SerializeField] public float DashCooldown { get; private set; }
 
     private Tween _hitColorTween;
@@ -70,6 +70,11 @@ public class PlayerStateMachine : StateMachine
         OnBeatAction?.Invoke(success);
 
         return success;
+    }
+
+    public void ImproveDash(float amount)
+    {
+        DashLength += amount;
     }
 
     private void HandleTakeDamage(int damage)
@@ -119,7 +124,12 @@ public class PlayerStateMachine : StateMachine
         Health.SetMaxHealth(maxHealth);
         Health.RestoreHealth(Mathf.RoundToInt(Health.CurrentMaxHealth * .1f));
 
-        int damage = Gun.InitialDamage * level;
-        //Gun.SetDamage(damage);
+        Gun.Damage.AttackPower = level;
+        Health.SetDefence(level);
+    }
+
+    public void Win()
+    {
+        SwitchState(new PlayerWinState(this));
     }
 }

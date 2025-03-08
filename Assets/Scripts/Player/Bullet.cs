@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private ParticleSystem _ps;
 
     private Rigidbody _rb;
-    [SerializeField] private int _damage;
+    private DamageData _damage;
     private IObjectPool<Bullet> _pool;
     private float _currentLifeTime;
     private List<Collider> _collidersAlreadyHit = new();
@@ -43,7 +43,7 @@ public class Bullet : MonoBehaviour
         _pool = pool;
     }
 
-    public void Init(int damage)
+    public void Init(DamageData damage)
     {
         _damage = damage;
     }
@@ -54,7 +54,7 @@ public class Bullet : MonoBehaviour
         if (onBeat)
         {
             mainModule.startLifetime = 1f;
-            _damage *= 2;
+            _damage.IsCritical = true;
         }
         else
         {

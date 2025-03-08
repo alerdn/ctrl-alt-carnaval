@@ -5,7 +5,7 @@ using UnityEngine.Pool;
 public class Gun : MonoBehaviour
 {
     public int InitialDamage => _initialDamage;
-    public int Damage => _damage;
+    public DamageData Damage;
 
     [SerializeField] private Transform ShootingPoint;
     [SerializeField] private Bullet _bulletPrefab;
@@ -15,7 +15,6 @@ public class Gun : MonoBehaviour
     [SerializeField] private float _followSpeed;
     [SerializeField] private LayerMask GroundMask;
 
-    private int _damage;
     private PlayerStateMachine _player;
     private IObjectPool<Bullet> _bulletPool;
     private int _maxPoolSize = 20;
@@ -27,7 +26,7 @@ public class Gun : MonoBehaviour
     {
         _mainCamera = Camera.main;
         _startYPostion = transform.position.y;
-        SetDamage(_initialDamage);
+        Damage = new DamageData() { Damage = _initialDamage, AttackPower = 1 };
 
         transform.DOMoveY(_startYPostion + .1f, 1f).From(_startYPostion - .1f).SetLoops(-1, LoopType.Yoyo);
 
@@ -51,11 +50,6 @@ public class Gun : MonoBehaviour
         _player.InputReader.FireEvent += Fire;
     }
 
-    public void SetDamage(int damage)
-    {
-        _damage = Mathf.Max(damage, _initialDamage);
-    }
-
     #region Bullet Pool
 
     private Bullet OnCreateBullet()
@@ -71,7 +65,7 @@ public class Gun : MonoBehaviour
     private void OnTakeFromPool(Bullet bullet)
     {
         int modifier = Mathf.RoundToInt(Random.Range(_damageRange.x, _damageRange.y));
-        bullet.Init(_damage + modifier);
+        bullet.Init(new DamageData() { Damage = Damage.Damage + modifier, AttackPower = Damage.AttackPower });
         bullet.gameObject.SetActive(true);
     }
 

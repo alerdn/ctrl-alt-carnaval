@@ -17,7 +17,7 @@ public class PlayerDashingState : PlayerBaseState
         stateMachine.DashCooldownTimeStamp = Time.time + stateMachine.DashCooldown;
         stateMachine.Health.SetInvulnerable(true);
 
-        _remainingDodgeTime = stateMachine.DodgeDuration;
+        _remainingDodgeTime = stateMachine.DashDuration;
 
         if (stateMachine.IsWithinBeatWindow())
         {
@@ -58,8 +58,8 @@ public class PlayerDashingState : PlayerBaseState
         forward.Normalize();
         right.Normalize();
 
-        movement += _dodgingDirection.y * stateMachine.DodgeLength * forward / stateMachine.DodgeDuration;
-        movement += _dodgingDirection.x * stateMachine.DodgeLength * right / stateMachine.DodgeDuration;
+        movement += _dodgingDirection.y * stateMachine.DashLength * forward / stateMachine.DashDuration;
+        movement += _dodgingDirection.x * stateMachine.DashLength * right / stateMachine.DashDuration;
 
         return movement;
     }

@@ -9,6 +9,7 @@ public abstract class Collectable : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+
             Collect();
         }
     }

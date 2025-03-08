@@ -19,7 +19,7 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator LoadSceneRoutine(string sceneName)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         asyncLoad.allowSceneActivation = false;
 
         while (!asyncLoad.isDone)

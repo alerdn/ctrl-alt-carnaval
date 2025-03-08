@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
@@ -16,11 +16,20 @@ public record WaveConfig
 }
 
 [Serializable]
-public struct EnemyData
+public record EnemyData
 {
     public EnemyStateMachine Enemy;
-    [Range(0.1f, 1f)]
-    public float Probability;
+    public int MaxAmount;
+    public int CurrentAmount;
+}
+
+[Serializable]
+public record SpecialEnemyData
+{
+    public EnemyStateMachine Enemy;
+    public int WaveNumber;
+    public int MaxAmount;
+    public int CurrentAmount;
 }
 
 public class WaveManager : MonoBehaviour
@@ -43,13 +52,15 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] private PlayerStateMachine _player;
     [SerializeField] private SOString _clock;
+    [SerializeField] private int _lastWave;
     [SerializeField] private List<WaveConfig> _waves;
     [SerializeField] private Transform _enemiesContainer;
     [SerializeField] private List<EnemyData> _enemiesData;
+    [SerializeField] private List<SpecialEnemyData> _specialEnemiesData;
 
     [Header("Spawn Points")]
-    [SerializeField] private float _innerRadius = 1f; // Raio do círculo menor (excluído)
-    [SerializeField] private float _outerRadius = 3f; // Raio do círculo maior
+    [SerializeField] private float _innerRadius = 1f;
+    [SerializeField] private float _outerRadius = 3f;
     [SerializeField] private Vector2 _xBoudries = new(-25f, 25f);
     [SerializeField] private Vector2 _yBoudries = new(-25f, 25f);
     [SerializeField] private int _maxEnemiesSpawned = 100;
@@ -75,11 +86,22 @@ public class WaveManager : MonoBehaviour
     private void Update()
     {
         CurrentTimeSpan += TimeSpan.FromSeconds(Time.deltaTime);
-        _clock.Value = $"{CurrentTimeSpan.Minutes:D2}:{CurrentTimeSpan.Seconds:D2}";
+        if (CurrentTimeSpan.Minutes >= _lastWave)
+        {
+            if (_enemies.Find(enemy => enemy.isActiveAndEnabled) == null)
+                _clock.Value = "VOCE VENCEU!";
+            else _clock.Value = "HORA DA VERDADE!";
+        }
+        else
+        {
+            _clock.Value = $"{CurrentTimeSpan.Minutes:D2}:{CurrentTimeSpan.Seconds:D2}";
+        }
     }
 
     private void SpawnWave()
     {
+        if (CurrentTimeSpan.Minutes >= _lastWave) return;
+
         foreach (var enemy in _enemies)
         {
             if (enemy.isActiveAndEnabled)
@@ -88,12 +110,12 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        _ = SpawnWaveTask();
+        StartCoroutine(SpawnWaveTask());
     }
 
-    private async UniTask SpawnWaveTask()
+    private IEnumerator SpawnWaveTask()
     {
-        await UniTask.Delay(1000);
+        yield return new WaitForSeconds(1f);
 
         int maxEnemiesAmountToSpawn = Mathf.Max(_maxEnemiesSpawned - _enemies.FindAll(enemy => enemy.isActiveAndEnabled).Count, 0);
 
@@ -120,10 +142,32 @@ public class WaveManager : MonoBehaviour
                         _enemies.Add(enemy);
                     }
 
-                    await UniTask.WaitForEndOfFrame();
+                    yield return new WaitForEndOfFrame();
                 }
-                await UniTask.Delay(60000 / wave.EnemiesSubWaveCount);
+                yield return new WaitForSeconds(60f / wave.EnemiesSubWaveCount);
             }
+        }
+
+        var specialList = _specialEnemiesData.FindAll(data =>
+        {
+            if (CurrentTimeSpan.Minutes != data.WaveNumber) return false;
+            if (data.CurrentAmount >= data.MaxAmount) return false;
+
+            data.CurrentAmount++;
+            return true;
+        });
+
+        foreach (var special in specialList)
+        {
+            EnemyStateMachine enemy = Instantiate(special.Enemy, _enemiesContainer);
+            enemy.Init(GetRandomPointInRing(), 1);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (CurrentTimeSpan.Minutes >= _lastWave && _enemies.Find(enemy => enemy.isActiveAndEnabled) == null)
+        {
+            PlayerStateMachine.Instance.Win();
         }
     }
 
@@ -149,10 +193,7 @@ public class WaveManager : MonoBehaviour
 
     private EnemyStateMachine OnCreateEnemy()
     {
-        float probability = Random.Range(0f, 1f);
-        EnemyData? data = _enemiesData.FindLast(data => data.Probability <= probability);
-        EnemyStateMachine prefab = data?.Enemy ?? _enemiesData[0].Enemy;
-
+        var prefab = _enemiesData.GetRandom().Enemy;
         EnemyStateMachine enemy = Instantiate(prefab, _enemiesContainer);
         enemy.SetPool(_enemyPool);
 

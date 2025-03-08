@@ -57,11 +57,11 @@ MonoBehaviour:
   <Renderer>k__BackingField: {fileID: 2443534670679157989}
   <ForceReceiver>k__BackingField: {fileID: 3588847281323004012}
   <BeatComp>k__BackingField: {fileID: 5620323793596279876}
-  <BeatThreshold>k__BackingField: 0.15
+  <BeatThreshold>k__BackingField: 0.1
   <FreeLookMovement>k__BackingField: 5
   <RotationDamping>k__BackingField: 10
-  <DodgeDuration>k__BackingField: 0.1
-  <DodgeLength>k__BackingField: 3
+  <DashDuration>k__BackingField: 0.1
+  <DashLength>k__BackingField: 3
   <DashCooldown>k__BackingField: 0.5
   DashCooldownTimeStamp: 0
 --- !u!143 &8971905233270831842
@@ -116,8 +116,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialMaxHealth: 500
+  _initialDefence: 1
   _health: 0
   _currentMaxHealth: 0
+  _defence: 0
 --- !u!114 &5620323793596279876
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class EnemyChasingState : EnemyBaseState
             stateMachine.SwitchState(new EnemyAttackingState(stateMachine));
         }
 
-        MoveToPlayer(deltaTime);
+        MoveToPlayer();
         FacePlayer();
     }
 
@@ -31,15 +31,5 @@ public class EnemyChasingState : EnemyBaseState
             stateMachine.Agent.ResetPath();
         }
         stateMachine.Agent.velocity = Vector3.zero;
-    }
-
-    private void MoveToPlayer(float deltaTime)
-    {
-        if (Time.frameCount % 10 != 0) return;
-
-        if (stateMachine.Agent.isOnNavMesh)
-        {
-            stateMachine.Agent.destination = stateMachine.Player.transform.position;
-        }
     }
 }

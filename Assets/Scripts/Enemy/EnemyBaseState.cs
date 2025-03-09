@@ -9,11 +9,20 @@ public abstract class EnemyBaseState : State
         this.stateMachine = stateMachine;
     }
 
-    // protected void Move(Vector3 motion, float deltaTime)
-    // {
-    //     Vector3 force = stateMachine.ForceReceiver.Movement;
-    //     stateMachine.CharacterController.Move((motion + force) * deltaTime);
-    // }
+    protected void MoveToPlayer()
+    {
+        MoveTo(stateMachine.Player.transform.position);
+    }
+
+    protected void MoveTo(Vector3 position)
+    {
+        if (Time.frameCount % 10 != 0) return;
+
+        if (stateMachine.Agent.isOnNavMesh)
+        {
+            stateMachine.Agent.destination = position;
+        }
+    }
 
     protected void FacePlayer()
     {
@@ -29,5 +38,11 @@ public abstract class EnemyBaseState : State
     {
         float playerDistanceSqr = (stateMachine.Player.transform.position - stateMachine.transform.position).sqrMagnitude;
         return playerDistanceSqr <= Mathf.Pow(stateMachine.AttackRange, 2);
+    }
+
+    protected bool IsInImpactRange()
+    {
+        float playerDistanceSqr = (stateMachine.Player.transform.position - stateMachine.transform.position).sqrMagnitude;
+        return playerDistanceSqr <= Mathf.Pow(stateMachine.ImpactRange, 2);
     }
 }

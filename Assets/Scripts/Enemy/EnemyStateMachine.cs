@@ -4,8 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
 
+public enum EnemyType
+{
+    Chaser,
+    Charger,
+    Healer,
+}
+
 public class EnemyStateMachine : StateMachine
 {
+    [field: SerializeField] public EnemyType Type { get; private set; }
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public NavMeshAgent Agent { get; private set; }
     [field: SerializeField] public Health Health { get; private set; }
@@ -16,6 +24,8 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public int ExpValue { get; private set; }
     [field: SerializeField] public int InitialDamage { get; private set; }
     [field: SerializeField] public float AttackRange { get; private set; }
+    [field: SerializeField] public float ImpactRange { get; internal set; }
+    [SerializeField] private bool _debug;
 
     public DamageData Damage { get; private set; }
     public PlayerStateMachine Player { get; private set; }
@@ -44,6 +54,11 @@ public class EnemyStateMachine : StateMachine
         Agent.updateRotation = false;
 
         EXPPool = new LinkedPool<EXPCollectable>(OnCreate, OnTakeFromPool, OnReturnToPool, OnDestroyItem, true);
+
+        if (_debug)
+        {
+            Init(Vector3.zero, 1);
+        }
     }
 
     public void Init(Vector3 position, int power)
@@ -133,5 +148,8 @@ public class EnemyStateMachine : StateMachine
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, AttackRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, ImpactRange);
     }
 }

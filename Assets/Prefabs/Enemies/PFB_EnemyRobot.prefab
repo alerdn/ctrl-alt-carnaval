@@ -211,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf169385d83a2d43a5a7dfdb5f2fb26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Type>k__BackingField: 0
   <Animator>k__BackingField: {fileID: 3311253024967955486}
   <Agent>k__BackingField: {fileID: 4670394018883276872}
   <Health>k__BackingField: {fileID: 1605702325584611535}
@@ -219,8 +220,10 @@ MonoBehaviour:
   <HitUI>k__BackingField: {fileID: 1029580453750339995}
   <EXPCollectablePrefab>k__BackingField: {fileID: 2654649969164371957, guid: f17398c55db96dc48beb5f680d521620, type: 3}
   <ExpValue>k__BackingField: 0
-  <InitialDamage>k__BackingField: 5
+  <InitialDamage>k__BackingField: 10
   <AttackRange>k__BackingField: 1.5
+  <ImpactRange>k__BackingField: 0
+  _debug: 0
 --- !u!195 &4670394018883276872
 NavMeshAgent:
   m_ObjectHideFlags: 0

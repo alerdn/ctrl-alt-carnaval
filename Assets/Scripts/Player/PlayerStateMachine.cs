@@ -35,11 +35,11 @@ public class PlayerStateMachine : StateMachine
     private void Awake()
     {
         Instance = this;
+        MainCameraTransform = Camera.main.transform;
     }
 
     private void Start()
     {
-        MainCameraTransform = Camera.main.transform;
         InputReader.SetControllerMode(ControllerMode.Gameplay);
 
         Gun.Init(this);

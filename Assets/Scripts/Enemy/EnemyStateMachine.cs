@@ -25,6 +25,7 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public int InitialDamage { get; private set; }
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public float ImpactRange { get; internal set; }
+    [field: SerializeField] public ParticleSystem HealEffect { get; private set; }
     [SerializeField] private bool _debug;
 
     public DamageData Damage { get; private set; }

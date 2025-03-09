@@ -10,6 +10,8 @@ public class EnemyAttackingState : EnemyBaseState
     private float _chargingCooldown;
     private Vector3 _playerPosition;
 
+    private bool _isPraying;
+
     public EnemyAttackingState(EnemyStateMachine stateMachine) : base(stateMachine)
     {
         _isCharging = true;
@@ -17,6 +19,8 @@ public class EnemyAttackingState : EnemyBaseState
         _chargingCooldown = 2f;
         _playerPosition = stateMachine.Player.transform.position;
         _playerPosition += stateMachine.transform.forward * 2;
+
+        _isPraying = false;
     }
 
     public override void Enter()
@@ -60,6 +64,10 @@ public class EnemyAttackingState : EnemyBaseState
                 }
                 break;
             case EnemyType.Healer:
+                if (!IsInAttackRange())
+                {
+                    stateMachine.SwitchState(new EnemyChasingState(stateMachine));
+                }
                 break;
         }
 
@@ -114,6 +122,22 @@ public class EnemyAttackingState : EnemyBaseState
 
     private void HealerAttack()
     {
+        if (!_isPraying)
+        {
+            _isPraying = true;
+            stateMachine.Animator.CrossFadeInFixedTime("Praying", 0.1f);
+        }
 
+        Collider[] allies = Physics.OverlapSphere(stateMachine.transform.position, stateMachine.AttackRange, LayerMask.GetMask("Enemy"));
+        foreach (var ally in allies)
+        {
+            if (ally.TryGetComponent(out EnemyStateMachine enemy))
+            {
+                if (enemy.Type == EnemyType.Healer) continue;
+
+                enemy.Health.RestoreHealth(Mathf.RoundToInt((float)enemy.Health.CurrentMaxHealth * .5f));
+                enemy.HealEffect.Play();
+            }
+        }
     }
 }

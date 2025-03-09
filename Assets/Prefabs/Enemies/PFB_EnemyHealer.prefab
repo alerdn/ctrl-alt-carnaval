@@ -61,10 +61,10 @@ MonoBehaviour:
   <EXPCollectablePrefab>k__BackingField: {fileID: 2654649969164371957, guid: f17398c55db96dc48beb5f680d521620, type: 3}
   <ExpValue>k__BackingField: 0
   <InitialDamage>k__BackingField: 0
-  <AttackRange>k__BackingField: 8
+  <AttackRange>k__BackingField: 20
   <ImpactRange>k__BackingField: 0
   <HealEffect>k__BackingField: {fileID: 8446530855263129829}
-  _debug: 1
+  _debug: 0
 --- !u!195 &4122872403965738267
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -116,8 +116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shieldEffect: {fileID: 0}
-  _initialMaxHealth: 200
-  _initialDefence: 1
+  _initialMaxHealth: 500
+  _initialDefence: 5
   _health: 0
   _currentMaxHealth: 0
   _defence: 0

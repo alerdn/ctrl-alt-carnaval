@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   Title: Casca grossa
-  Description: Aumenta a defesa em 10%
+  Description: Aumenta a defesa em 10/100
+  IsSpecial: 0
+  IsActive: 0

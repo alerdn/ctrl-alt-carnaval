@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Special PowerUpData DashProtection
   m_EditorClassIdentifier: 
   Type: 5
-  Title: "Avan\xE7o Defensivo"
+  Title: Movimento Defensivo
   Description: Ganha escudo protetor ao dar dash
   IsSpecial: 1
   IsActive: 0

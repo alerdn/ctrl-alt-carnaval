@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: PowerUpData Dash
   m_EditorClassIdentifier: 
   Type: 3
-  Title: "P\xE9 de val\xE7a"
+  Title: Pe de valca
   Description: Aumenta distancia do dash
+  IsSpecial: 0
+  IsActive: 0

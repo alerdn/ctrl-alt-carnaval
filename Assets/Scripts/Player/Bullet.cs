@@ -16,6 +16,8 @@ public class Bullet : MonoBehaviour
     private float _currentLifeTime;
     private List<Collider> _collidersAlreadyHit = new();
 
+    public bool Heal;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -46,9 +48,10 @@ public class Bullet : MonoBehaviour
     public void Init(DamageData damage)
     {
         _damage = damage;
+        Heal = false;
     }
 
-    public void Fire(bool onBeat, Vector3 position, Quaternion rotation)
+    public void Fire(bool onBeat, Vector3 position, Quaternion rotation, float shootForceModifier = 1)
     {
         var mainModule = _ps.main;
         if (onBeat)
@@ -63,7 +66,7 @@ public class Bullet : MonoBehaviour
 
         transform.SetPositionAndRotation(position, rotation);
 
-        _rb.AddForce(transform.forward * _shootForce, ForceMode.Impulse);
+        _rb.AddForce(transform.forward * _shootForce * shootForceModifier, ForceMode.Impulse);
     }
 
     private void Release()
@@ -87,6 +90,11 @@ public class Bullet : MonoBehaviour
             {
                 _collidersAlreadyHit.Add(other);
                 health.TakeDamage(_damage);
+
+                if (Heal)
+                {
+                    PlayerStateMachine.Instance.Health.RestoreHealth(Mathf.RoundToInt((float)PlayerStateMachine.Instance.Health.CurrentMaxHealth * .001f));
+                }
             }
         }
     }

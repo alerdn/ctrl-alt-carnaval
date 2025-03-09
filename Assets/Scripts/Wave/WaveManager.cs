@@ -88,9 +88,7 @@ public class WaveManager : MonoBehaviour
         CurrentTimeSpan += TimeSpan.FromSeconds(Time.deltaTime);
         if (CurrentTimeSpan.Minutes >= _lastWave)
         {
-            if (_enemies.Find(enemy => enemy.isActiveAndEnabled) == null)
-                _clock.Value = "VOCE VENCEU!";
-            else _clock.Value = "HORA DA VERDADE!";
+            _clock.Value = "HORA DA VERDADE!";
         }
         else
         {
@@ -116,6 +114,23 @@ public class WaveManager : MonoBehaviour
     private IEnumerator SpawnWaveTask()
     {
         yield return new WaitForSeconds(1f);
+
+        var specialList = _specialEnemiesData.FindAll(data =>
+              {
+                  if (CurrentTimeSpan.Minutes != data.WaveNumber) return false;
+                  if (data.CurrentAmount >= data.MaxAmount) return false;
+
+                  data.CurrentAmount++;
+                  return true;
+              });
+
+        foreach (var special in specialList)
+        {
+            EnemyStateMachine enemy = Instantiate(special.Enemy, _enemiesContainer);
+            enemy.Init(GetRandomPointInRing(), 1);
+
+            yield return new WaitForEndOfFrame();
+        }
 
         int maxEnemiesAmountToSpawn = Mathf.Max(_maxEnemiesSpawned - _enemies.FindAll(enemy => enemy.isActiveAndEnabled).Count, 0);
 
@@ -146,23 +161,6 @@ public class WaveManager : MonoBehaviour
                 }
                 yield return new WaitForSeconds(60f / wave.EnemiesSubWaveCount);
             }
-        }
-
-        var specialList = _specialEnemiesData.FindAll(data =>
-        {
-            if (CurrentTimeSpan.Minutes != data.WaveNumber) return false;
-            if (data.CurrentAmount >= data.MaxAmount) return false;
-
-            data.CurrentAmount++;
-            return true;
-        });
-
-        foreach (var special in specialList)
-        {
-            EnemyStateMachine enemy = Instantiate(special.Enemy, _enemiesContainer);
-            enemy.Init(GetRandomPointInRing(), 1);
-
-            yield return new WaitForEndOfFrame();
         }
 
         if (CurrentTimeSpan.Minutes >= _lastWave && _enemies.Find(enemy => enemy.isActiveAndEnabled) == null)

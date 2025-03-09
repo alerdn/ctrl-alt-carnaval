@@ -8,7 +8,7 @@ public class HealItem : Collectable
     {
         AudioManager.Instance.PlayCue("Heal");
 
-        PlayerStateMachine.Instance.Health.RestoreHealth(_healAmount);
+        PlayerStateMachine.Instance.Health.RestoreHealth(Mathf.RoundToInt((float)PlayerStateMachine.Instance.Health.CurrentMaxHealth * _healAmount / 100f));
         Destroy(gameObject);
     }
 }

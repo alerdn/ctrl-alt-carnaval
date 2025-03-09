@@ -129,6 +129,22 @@ public class PowerUpController : MonoBehaviour
                 _player.Gun.FireTriple = true;
                 Debug.Log("Fire Triple habilitado");
                 break;
+            case PowerUp.FireBack:
+                _player.Gun.FireBack = true;
+                Debug.Log("Fire Back habilitado");
+                break;
+            case PowerUp.FireHeal:
+                _player.Gun.FireHeal = true;
+                Debug.Log("Fire Heal habilitado");
+                break;
+            case PowerUp.FireMultiple:
+                _player.Gun.FireMultiple = true;
+                Debug.Log("Fire Multiple habilitado");
+                break;
+            case PowerUp.DashBombastic:
+                _player.DashBombastic = true;
+                Debug.Log("Dash Bombastic habilitado");
+                break;
         }
 
         Hide();

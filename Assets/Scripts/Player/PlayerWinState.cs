@@ -24,7 +24,7 @@ public class PlayerWinState : PlayerBaseState
         if (_respawnDelay <= 0 && !_loading)
         {
             _loading = true;
-            GameManager.Instance.LoadScene("SCN_Game");
+            GameManager.Instance.LoadScene("SCN_Menu");
         }
     }
 

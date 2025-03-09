@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Special PowerUpData FireTriple
   m_EditorClassIdentifier: 
   Type: 6
-  Title: Ondas Triplas
+  Title: Triloco
   Description: Emite 3 ondas para frente ao atirar
   IsSpecial: 1
   IsActive: 0

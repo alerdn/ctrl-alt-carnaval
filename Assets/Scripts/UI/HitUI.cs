@@ -14,10 +14,10 @@ public class HitUI : MonoBehaviour
         _hitPool = new LinkedPool<HitElement>(OnCreateHitText, OnTakeFromPool, OnReturnToPool, OnDestroyHitText, true, _maxPoolSize);
     }
 
-    public void ShowHitText(string text)
+    public void ShowHitText(DamageData data)
     {
         HitElement hit = _hitPool.Get();
-        hit.Init(text);
+        hit.Init(data);
     }
 
     #region Pool

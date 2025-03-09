@@ -62,6 +62,11 @@ public class PlayerDashingState : PlayerBaseState
                 {
                     stateMachine.Health.Shield = 100;
                 }
+
+                if (stateMachine.DashBombastic)
+                {
+                    Object.Instantiate(stateMachine.Bomb, stateMachine.transform.position, Quaternion.identity);
+                }
             }
 
             stateMachine.SwitchState(new PlayerFreeLookState(stateMachine));

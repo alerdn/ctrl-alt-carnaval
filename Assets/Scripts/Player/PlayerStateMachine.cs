@@ -27,6 +27,7 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public float DashCooldown { get; private set; }
     [field: SerializeField] public float DashExplosionRadius { get; private set; }
     [field: SerializeField] public ParticleSystem DashExplosionPS { get; private set; }
+    [field: SerializeField] public Bomb Bomb { get; private set; }
 
     private Tween _hitColorTween;
 
@@ -37,6 +38,7 @@ public class PlayerStateMachine : StateMachine
     // Power Ups
     public bool DashExplosion;
     public bool DashProtection;
+    public bool DashBombastic;
 
     private float _lastBeatTime;
 
@@ -85,7 +87,7 @@ public class PlayerStateMachine : StateMachine
         DashLength += amount;
     }
 
-    private void HandleTakeDamage(int damage)
+    private void HandleTakeDamage(DamageData damage)
     {
         _hitColorTween?.Kill();
         _hitColorTween = Renderer.material.DOColor(Color.red, "_Color", .1f).From(Color.white).SetLoops(2, LoopType.Yoyo);

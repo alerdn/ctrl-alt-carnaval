@@ -134,7 +134,7 @@ public class EnemyAttackingState : EnemyBaseState
             {
                 if (enemy.Type == EnemyType.Healer) continue;
 
-                enemy.Health.RestoreHealth(Mathf.RoundToInt((float)enemy.Health.CurrentMaxHealth * .5f));
+                enemy.Health.RestoreHealth(Mathf.RoundToInt(enemy.Health.CurrentMaxHealth));
                 enemy.HealEffect.Play();
             }
         }

@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   Title: Alta Frequencia
-  Description: Aumenta o dano em 10%
+  Description: Aumenta o dano em 10/100
+  IsSpecial: 0
+  IsActive: 0

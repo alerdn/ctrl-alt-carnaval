@@ -11,7 +11,7 @@ public record DamageData
 
 public class Health : MonoBehaviour
 {
-    public event UnityAction<int> OnTakeDamage;
+    public event UnityAction<DamageData> OnTakeDamage;
     public event UnityAction OnDie;
     public event UnityAction<int, int> OnHealthChanged;
     public event UnityAction<int> OnMaxHealthChanged;
@@ -115,7 +115,7 @@ public class Health : MonoBehaviour
         else
         {
             CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-            OnTakeDamage?.Invoke(damage);
+            OnTakeDamage?.Invoke(data);
         }
 
         if (CurrentHealth == 0)

@@ -8,7 +8,11 @@ public enum PowerUp
     DashImprovement,
     DashExplosion,
     DashProtection,
-    FireTriple
+    FireTriple,
+    FireBack,
+    FireHeal,
+    FireMultiple,
+    DashBombastic
 }
 
 [CreateAssetMenu(fileName = "PowerUpData", menuName = "PowerUp")]

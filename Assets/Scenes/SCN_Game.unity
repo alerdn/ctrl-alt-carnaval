@@ -16486,7 +16486,7 @@ MonoBehaviour:
   - {fileID: 1874339836}
   - {fileID: 274206115}
   - {fileID: 1457124514}
-  _specialPowerUpRate: 1
+  _specialPowerUpRate: 5
   _allPowerUpsData: []
 --- !u!1 &1673310371
 GameObject:
@@ -21058,19 +21058,19 @@ MonoBehaviour:
   - WaveNumber: 0
     EnemiesCount: 120
     EnemiesSubWaveCount: 12
-    TotalEXP: 120
+    TotalEXP: 100
   - WaveNumber: 3
-    EnemiesCount: 180
-    EnemiesSubWaveCount: 12
-    TotalEXP: 120
-  - WaveNumber: 5
     EnemiesCount: 240
     EnemiesSubWaveCount: 12
-    TotalEXP: 120
-  - WaveNumber: 8
+    TotalEXP: 100
+  - WaveNumber: 5
     EnemiesCount: 300
     EnemiesSubWaveCount: 12
-    TotalEXP: 120
+    TotalEXP: 100
+  - WaveNumber: 8
+    EnemiesCount: 480
+    EnemiesSubWaveCount: 12
+    TotalEXP: 100
   _enemiesContainer: {fileID: 1961294466}
   _enemiesData:
   - Enemy: {fileID: 3538139104254785400, guid: 8c2d32f02d03f9844a59098a3bd96d04, type: 3}
@@ -21112,7 +21112,7 @@ MonoBehaviour:
     CurrentAmount: 0
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 4
-    MaxAmount: 2
+    MaxAmount: 5
     CurrentAmount: 0
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 5
@@ -21120,7 +21120,7 @@ MonoBehaviour:
     CurrentAmount: 0
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 6
-    MaxAmount: 5
+    MaxAmount: 10
     CurrentAmount: 0
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 7
@@ -21128,21 +21128,21 @@ MonoBehaviour:
     CurrentAmount: 0
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 8
-    MaxAmount: 5
+    MaxAmount: 10
     CurrentAmount: 0
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 9
-    MaxAmount: 5
+    MaxAmount: 10
     CurrentAmount: 0
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 10
-    MaxAmount: 5
+    MaxAmount: 10
     CurrentAmount: 0
   _innerRadius: 12
   _outerRadius: 18
   _xBoudries: {x: -25, y: 75}
   _yBoudries: {x: -25, y: 75}
-  _maxEnemiesSpawned: 100
+  _maxEnemiesSpawned: 200
 --- !u!1001 &2133775836
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,11 +15,12 @@ public class HitElement : MonoBehaviour
         _hitElementPool = hitElementPool;
     }
 
-    public void Init(string text)
+    public void Init(DamageData data)
     {
         gameObject.SetActive(true);
-        _text.text = text;
-        
+        _text.text = data.Damage.ToString();
+        _text.color = data.IsCritical ? Color.red : Color.white;
+
         _canvasGroup.transform.DOPunchScale(Vector3.one * .5f, .1f);
         _canvasGroup.DOFade(1f, .1f).From(0f).SetEase(Ease.InFlash).OnComplete(() =>
         {

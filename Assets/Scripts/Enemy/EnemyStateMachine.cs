@@ -81,15 +81,15 @@ public class EnemyStateMachine : StateMachine
 
     public void PowerUp(int power)
     {
-        int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * power * 1.5f);
-        int defence = Mathf.RoundToInt((float)Health.InitialDefence * power * 2);
+        int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * power * 3f);
+        int defence = Mathf.RoundToInt((float)Health.InitialDefence * power * 5);
 
         Health.SetMaxHealth(maxHealth);
         Health.RestoreHealth();
 
         Health.SetDefence(defence);
 
-        Damage = new DamageData { Damage = Mathf.Max(InitialDamage * power * 2, InitialDamage), AttackPower = 1 };
+        Damage = new DamageData { Damage = Mathf.Max(InitialDamage * power * 5, InitialDamage), AttackPower = 1 };
     }
 
     public void SetPool(IObjectPool<EnemyStateMachine> enemyPool)
@@ -102,9 +102,9 @@ public class EnemyStateMachine : StateMachine
         ExpValue = Mathf.Max(Mathf.RoundToInt(exp), 1);
     }
 
-    private void HandleTakeDamage(int damage)
+    private void HandleTakeDamage(DamageData damage)
     {
-        HitUI.ShowHitText(damage.ToString());
+        HitUI.ShowHitText(damage);
 
         _hitColorTween?.Kill();
         _hitColorTween = Renderer.material.DOColor(Color.red, "_Color", .1f).From(Color.white).SetLoops(2, LoopType.Yoyo);

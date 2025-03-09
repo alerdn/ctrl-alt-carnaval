@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -8,6 +9,9 @@ public class Gun : MonoBehaviour
 
     // Power Ups
     public bool FireTriple;
+    public bool FireBack;
+    public bool FireHeal;
+    public bool FireMultiple;
 
     public DamageData Damage;
 
@@ -132,18 +136,58 @@ public class Gun : MonoBehaviour
     {
         bool withinBeatWindow = _player.IsWithinBeatWindow();
 
+        List<Bullet> bullets = new List<Bullet>();
+
         Bullet bullet = _bulletPool.Get();
         bullet.Fire(withinBeatWindow, ShootingPoint.position, transform.rotation);
 
-        if (FireTriple)
-        {
-            float angleOffset = 20f;
+        bullets.Add(bullet);
 
-            for (int i = -1; i <= 1; i += 2)
+        if (withinBeatWindow)
+        {
+            if (FireTriple)
+            {
+                float angleOffset = 20f;
+
+                for (int i = -1; i <= 1; i += 2)
+                {
+                    Bullet extraBullet = _bulletPool.Get();
+                    Quaternion rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, i * angleOffset, 0));
+                    extraBullet.Fire(withinBeatWindow, ShootingPoint.position, rotation);
+
+                    bullets.Add(extraBullet);
+                }
+            }
+
+            if (FireBack)
             {
                 Bullet extraBullet = _bulletPool.Get();
-                Quaternion rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, i * angleOffset, 0));
+                Quaternion rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, 180, 0));
                 extraBullet.Fire(withinBeatWindow, ShootingPoint.position, rotation);
+
+                bullets.Add(extraBullet);
+            }
+
+            if (FireMultiple)
+            {
+                List<Bullet> extraBullets = new List<Bullet>();
+                for (int i = 0; i < bullets.Count; i++)
+                {
+                    Bullet extraBullet = _bulletPool.Get();
+                    extraBullet.Fire(withinBeatWindow, ShootingPoint.position, bullets[i].transform.rotation, .9f);
+
+                    extraBullets.Add(extraBullet);
+                }
+
+                bullets.AddRange(extraBullets);
+            }
+
+            if (FireHeal)
+            {
+                foreach (Bullet b in bullets)
+                {
+                    b.Heal = true;
+                }
             }
         }
 

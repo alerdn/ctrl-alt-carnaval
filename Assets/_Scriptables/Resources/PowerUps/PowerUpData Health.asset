@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   Title: Burrito
-  Description: "Aumenta a vida m\xE1xima em 10%"
+  Description: Aumenta a vida maxima em 10/100
+  IsSpecial: 0
+  IsActive: 0

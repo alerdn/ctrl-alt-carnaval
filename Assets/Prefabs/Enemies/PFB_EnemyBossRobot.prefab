@@ -206,8 +206,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f19d1e8b360a9243ad920be2c88ff5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialMaxHealth: 2000
-  _initialDefence: 10
+  _shieldEffect: {fileID: 0}
+  _initialMaxHealth: 1000
+  _initialDefence: 30
   _health: 0
   _currentMaxHealth: 0
   _defence: 0

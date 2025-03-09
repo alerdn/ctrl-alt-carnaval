@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Special PowerUpData DashExplosion
   m_EditorClassIdentifier: 
   Type: 4
-  Title: "Avan\xE7o Explosivo"
+  Title: Sai do caminho
   Description: Causa dano ao dar dash
   IsSpecial: 1
   IsActive: 0

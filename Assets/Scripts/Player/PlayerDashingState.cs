@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class PlayerDashingState : PlayerBaseState
@@ -6,6 +7,7 @@ public class PlayerDashingState : PlayerBaseState
 
     private Vector3 _dodgingDirection;
     private float _remainingDodgeTime;
+    private bool _isWithinBeatWindow;
 
     public PlayerDashingState(PlayerStateMachine stateMachine, Vector3 dodgingDirection) : base(stateMachine)
     {
@@ -19,7 +21,8 @@ public class PlayerDashingState : PlayerBaseState
 
         _remainingDodgeTime = stateMachine.DashDuration;
 
-        if (stateMachine.IsWithinBeatWindow())
+        _isWithinBeatWindow = stateMachine.IsWithinBeatWindow();
+        if (_isWithinBeatWindow)
         {
             stateMachine.DashCooldownTimeStamp = Time.time + stateMachine.DashCooldown / 2f;
         }
@@ -37,6 +40,30 @@ public class PlayerDashingState : PlayerBaseState
         _remainingDodgeTime -= deltaTime;
         if (_remainingDodgeTime <= 0)
         {
+            if (_isWithinBeatWindow)
+            {
+                if (stateMachine.DashExplosion)
+                {
+                    stateMachine.DashExplosionPS.Play();
+
+                    Physics.OverlapSphere(stateMachine.transform.position, stateMachine.DashExplosionRadius, LayerMask.GetMask("Enemy")).ToList()
+                        .ForEach(collider =>
+                        {
+                            if (collider.TryGetComponent<EnemyStateMachine>(out var enemy))
+                            {
+                                DamageData damage = stateMachine.Gun.GetDamage();
+                                damage.IsCritical = true;
+                                enemy.Health.TakeDamage(damage);
+                            }
+                        });
+                }
+
+                if (stateMachine.DashProtection)
+                {
+                    stateMachine.Health.Shield = 100;
+                }
+            }
+
             stateMachine.SwitchState(new PlayerFreeLookState(stateMachine));
         }
     }

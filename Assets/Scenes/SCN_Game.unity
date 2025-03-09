@@ -16486,6 +16486,7 @@ MonoBehaviour:
   - {fileID: 1874339836}
   - {fileID: 274206115}
   - {fileID: 1457124514}
+  _specialPowerUpRate: 1
   _allPowerUpsData: []
 --- !u!1 &1673310371
 GameObject:
@@ -18303,8 +18304,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8a363a1b3a2146043af572b5b3ce6cdd, type: 3}
-  m_Resource: {fileID: 8300000, guid: 8a363a1b3a2146043af572b5b3ce6cdd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c146887972c1a054d9f8456d75069df3, type: 3}
+  m_Resource: {fileID: 8300000, guid: c146887972c1a054d9f8456d75069df3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.75
   m_Pitch: 1

@@ -6,6 +6,9 @@ public enum PowerUp
     Health10Percent,
     Defence10Percent,
     DashImprovement,
+    DashExplosion,
+    DashProtection,
+    FireTriple
 }
 
 [CreateAssetMenu(fileName = "PowerUpData", menuName = "PowerUp")]
@@ -14,4 +17,6 @@ public class PowerUPData : ScriptableObject
     public PowerUp Type;
     public string Title;
     public string Description;
+    public bool IsSpecial;
+    public bool IsActive;
 }

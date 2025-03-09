@@ -25,11 +25,19 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public float DashDuration { get; private set; }
     [field: SerializeField] public float DashLength { get; private set; }
     [field: SerializeField] public float DashCooldown { get; private set; }
+    [field: SerializeField] public float DashExplosionRadius { get; private set; }
+    [field: SerializeField] public ParticleSystem DashExplosionPS { get; private set; }
 
     private Tween _hitColorTween;
 
     public Transform MainCameraTransform { get; private set; }
+
     public float DashCooldownTimeStamp;
+
+    // Power Ups
+    public bool DashExplosion;
+    public bool DashProtection;
+
     private float _lastBeatTime;
 
     private void Awake()
@@ -131,5 +139,11 @@ public class PlayerStateMachine : StateMachine
     public void Win()
     {
         SwitchState(new PlayerWinState(this));
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, DashExplosionRadius);
     }
 }

@@ -18,7 +18,6 @@ public class EnemyAttackingState : EnemyBaseState
         _hasCharged = false;
         _chargingCooldown = 2f;
         _playerPosition = stateMachine.Player.transform.position;
-        _playerPosition += stateMachine.transform.forward * 2;
 
         _isPraying = false;
     }

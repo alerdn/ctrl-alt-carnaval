@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class ExperienceManager : Singleton<ExperienceManager>
 {
-    public UnityAction OnLevelUp;
+    public UnityAction<int> OnLevelUp;
 
     public int ExperienceToNextLevel => _experienceToNextLevel;
 
@@ -44,6 +44,6 @@ public class ExperienceManager : Singleton<ExperienceManager>
         // Melhorar o personagem
         _player.PowerUp(Level.Value);
 
-        OnLevelUp?.Invoke();
+        OnLevelUp?.Invoke(Level.Value);
     }
 }

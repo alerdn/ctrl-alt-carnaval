@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using NaughtyAttributes;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PowerUpController : MonoBehaviour
@@ -13,6 +14,7 @@ public class PowerUpController : MonoBehaviour
     [SerializeField] private Ease _introEase;
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private List<PowerUpUI> _powerUpsUI;
+    [SerializeField] private int _specialPowerUpRate;
 
     [Header("Debug")]
     [SerializeField] private List<PowerUPData> _allPowerUpsData;
@@ -25,6 +27,10 @@ public class PowerUpController : MonoBehaviour
         ExperienceManager.Instance.OnLevelUp += Show;
 
         _allPowerUpsData = Resources.LoadAll<PowerUPData>("PowerUps").ToList();
+        foreach (PowerUPData powerUp in _allPowerUpsData)
+        {
+            powerUp.IsActive = false;
+        }
 
         foreach (var powerUpUI in _powerUpsUI)
         {
@@ -44,8 +50,7 @@ public class PowerUpController : MonoBehaviour
         }
     }
 
-    [Button]
-    public void Show()
+    public void Show(int level)
     {
         AudioManager.Instance.PlayCue("LevelUp");
 
@@ -55,9 +60,23 @@ public class PowerUpController : MonoBehaviour
         _frame.gameObject.SetActive(true);
         _foreground.DOLocalMoveX(0, .75f).From(1920).SetDelay(.5f).SetEase(_introEase).SetUpdate(true);
 
+        List<PowerUPData> powerUps;
+        if (level % _specialPowerUpRate == 0)
+        {
+            powerUps = _allPowerUpsData.FindAll(p => p.IsSpecial == true && p.IsActive == false);
+        }
+        else
+        {
+            powerUps = _allPowerUpsData.FindAll(p => p.IsSpecial == false);
+        }
+
         foreach (var powerUpUI in _powerUpsUI)
         {
-            powerUpUI.Init(_allPowerUpsData.GetRandom());
+            if (powerUps.Count == 0)
+            {
+                powerUps = _allPowerUpsData.FindAll(p => p.IsSpecial == false);
+            }
+            powerUpUI.Init(powerUps.GetRandom());
         }
     }
 
@@ -70,6 +89,8 @@ public class PowerUpController : MonoBehaviour
     private void OnSelect(PowerUPData powerUp)
     {
         _inputReader.SetControllerMode(ControllerMode.Gameplay);
+
+        powerUp.IsActive = true;
 
         switch (powerUp.Type)
         {
@@ -93,6 +114,20 @@ public class PowerUpController : MonoBehaviour
             case PowerUp.DashImprovement:
                 _player.ImproveDash(.25f);
                 Debug.Log($"Dash improved to {_player.DashLength}");
+                break;
+
+
+            case PowerUp.DashExplosion:
+                _player.DashExplosion = true;
+                Debug.Log("Dash Explosivo habilitado");
+                break;
+            case PowerUp.DashProtection:
+                _player.DashProtection = true;
+                Debug.Log("Dash Protection habilitado");
+                break;
+            case PowerUp.FireTriple:
+                _player.Gun.FireTriple = true;
+                Debug.Log("Fire Triple habilitado");
                 break;
         }
 

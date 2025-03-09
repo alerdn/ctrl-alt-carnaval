@@ -46,9 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac52c0ca47ca98448551b39efbf563c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FireTriple: 0
   ShootingPoint: {fileID: 3829940551124884405}
   _bulletPrefab: {fileID: 2819637699459930086, guid: 2d556f9efb0f00c468467299303aeda0, type: 3}
-  _initialDamage: 15
+  _initialDamage: 5
   _damageRange: {x: -5, y: 5}
   _range: 1
   _followSpeed: 6

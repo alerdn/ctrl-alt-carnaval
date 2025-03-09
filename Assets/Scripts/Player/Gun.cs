@@ -5,6 +5,10 @@ using UnityEngine.Pool;
 public class Gun : MonoBehaviour
 {
     public int InitialDamage => _initialDamage;
+
+    // Power Ups
+    public bool FireTriple;
+
     public DamageData Damage;
 
     [SerializeField] private Transform ShootingPoint;
@@ -50,6 +54,12 @@ public class Gun : MonoBehaviour
         _player.InputReader.FireEvent += Fire;
     }
 
+    public DamageData GetDamage()
+    {
+        int modifier = Mathf.RoundToInt(Random.Range(_damageRange.x, _damageRange.y));
+        return new DamageData() { Damage = Damage.Damage + modifier, AttackPower = Damage.AttackPower };
+    }
+
     #region Bullet Pool
 
     private Bullet OnCreateBullet()
@@ -64,8 +74,7 @@ public class Gun : MonoBehaviour
 
     private void OnTakeFromPool(Bullet bullet)
     {
-        int modifier = Mathf.RoundToInt(Random.Range(_damageRange.x, _damageRange.y));
-        bullet.Init(new DamageData() { Damage = Damage.Damage + modifier, AttackPower = Damage.AttackPower });
+        bullet.Init(GetDamage());
         bullet.gameObject.SetActive(true);
     }
 
@@ -125,6 +134,18 @@ public class Gun : MonoBehaviour
 
         Bullet bullet = _bulletPool.Get();
         bullet.Fire(withinBeatWindow, ShootingPoint.position, transform.rotation);
+
+        if (FireTriple)
+        {
+            float angleOffset = 20f;
+
+            for (int i = -1; i <= 1; i += 2)
+            {
+                Bullet extraBullet = _bulletPool.Get();
+                Quaternion rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, i * angleOffset, 0));
+                extraBullet.Fire(withinBeatWindow, ShootingPoint.position, rotation);
+            }
+        }
 
         AudioManager.Instance.PlayCue("PlayerAttack");
     }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -43,7 +44,25 @@ public class Health : MonoBehaviour
         get => _defence;
         private set => _defence = value;
     }
+    public int Shield
+    {
+        get => _shield;
+        set
+        {
+            _shield = value;
+            if (_shield > 0)
+            {
+                _shieldEffect?.Play();
+            }
+            else
+            {
+                _shieldEffect?.Stop();
+            }
+        }
+    }
+    private int _shield;
 
+    [SerializeField] private ParticleSystem _shieldEffect;
     [SerializeField] private int _initialMaxHealth = 100;
     [SerializeField] private int _initialDefence = 1;
 
@@ -81,11 +100,23 @@ public class Health : MonoBehaviour
     {
         if (CurrentHealth == 0 || _isInvulnerable) return;
 
-        int damageBase = data.IsCritical ? data.Damage * 2 : data.Damage;
+        int damageBase = data.IsCritical ? data.Damage * 4 : data.Damage;
         int damage = Mathf.RoundToInt((float)damageBase * ((float)data.AttackPower / (float)CurrentDefence));
 
-        CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-        OnTakeDamage?.Invoke(damage);
+        if (Shield > 0)
+        {
+            Shield -= damage;
+            if (Shield < 0)
+            {
+                CurrentHealth += Shield;
+                Shield = 0;
+            }
+        }
+        else
+        {
+            CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
+            OnTakeDamage?.Invoke(damage);
+        }
 
         if (CurrentHealth == 0)
         {
@@ -97,5 +128,10 @@ public class Health : MonoBehaviour
     {
         if (heal == 0) CurrentHealth = CurrentMaxHealth;
         else CurrentHealth = Mathf.Min(CurrentHealth + heal, CurrentMaxHealth);
+    }
+
+    internal void TakeDamage(object dashExplosionDamage)
+    {
+        throw new NotImplementedException();
     }
 }

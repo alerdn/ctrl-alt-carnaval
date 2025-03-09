@@ -105,7 +105,7 @@ public class EnemyAttackingState : EnemyBaseState
         _hasCharged = true;
 
         AudioManager.Instance.PlayCue("EnemyAttack");
-        DOTween.To(() => stateMachine.Agent.speed, x => stateMachine.Agent.speed = x, 200, 1f).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
+        DOTween.To(() => stateMachine.Agent.speed, x => stateMachine.Agent.speed = x, 150, .25f).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
         {
             stateMachine.Animator.CrossFadeInFixedTime(IdleHash, .1f);
             _isCharging = false;

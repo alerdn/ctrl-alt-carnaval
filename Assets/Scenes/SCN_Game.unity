@@ -3904,7 +3904,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4b66e9741cb5599439928aa3569c68a3, type: 3}
   m_Resource: {fileID: 8300000, guid: 4b66e9741cb5599439928aa3569c68a3, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5231,7 +5231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level: {fileID: 11400000, guid: bb366c5d704f0754ba2e3249dc896f38, type: 2}
-  EXP: {fileID: 11400000, guid: 405bf422c81bcae49a02e1bfef71272b, type: 2}
+  EXP: {fileID: 11400000, guid: e9e87a22856e4c84aac3f7e01818fc96, type: 2}
   _experienceToNextLevel: 40
 --- !u!1001 &490491287
 PrefabInstance:
@@ -6411,7 +6411,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 9acbc7cf46daf46438f6afa3cc3d870a, type: 3}
   m_Resource: {fileID: 8300000, guid: 9acbc7cf46daf46438f6afa3cc3d870a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10058,7 +10058,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   m_Resource: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10352,7 +10352,7 @@ MonoBehaviour:
   _lifeBarAux: {fileID: 240293092}
   _lifeBar: {fileID: 381750816}
   _expBar: {fileID: 2045171257}
-  _exp: {fileID: 11400000, guid: 405bf422c81bcae49a02e1bfef71272b, type: 2}
+  _exp: {fileID: 11400000, guid: e9e87a22856e4c84aac3f7e01818fc96, type: 2}
   _comboBar: {fileID: 345975341}
   _comboIcon: {fileID: 657860755}
   _comboText: {fileID: 1645650458}
@@ -11140,7 +11140,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 5d7eeade436100e4ea3fe3c04d810007, type: 3}
   m_Resource: {fileID: 8300000, guid: 5d7eeade436100e4ea3fe3c04d810007, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -14089,7 +14089,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
   m_Resource: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -15951,7 +15951,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: b54a9bf674658084dbc588fad9783dfa, type: 3}
   m_Resource: {fileID: 8300000, guid: b54a9bf674658084dbc588fad9783dfa, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -18307,7 +18307,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c146887972c1a054d9f8456d75069df3, type: 3}
   m_Resource: {fileID: 8300000, guid: c146887972c1a054d9f8456d75069df3, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.75
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -19906,7 +19906,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 3c21a091e5553184c9680bbe8cc4ae09, type: 3}
   m_Resource: {fileID: 8300000, guid: 3c21a091e5553184c9680bbe8cc4ae09, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -21058,19 +21058,19 @@ MonoBehaviour:
   - WaveNumber: 0
     EnemiesCount: 120
     EnemiesSubWaveCount: 12
-    TotalEXP: 100
+    TotalEXP: 120
   - WaveNumber: 3
     EnemiesCount: 240
     EnemiesSubWaveCount: 12
-    TotalEXP: 100
+    TotalEXP: 120
   - WaveNumber: 5
-    EnemiesCount: 300
+    EnemiesCount: 280
     EnemiesSubWaveCount: 12
-    TotalEXP: 100
+    TotalEXP: 240
   - WaveNumber: 8
-    EnemiesCount: 480
+    EnemiesCount: 360
     EnemiesSubWaveCount: 12
-    TotalEXP: 100
+    TotalEXP: 120
   _enemiesContainer: {fileID: 1961294466}
   _enemiesData:
   - Enemy: {fileID: 3538139104254785400, guid: 8c2d32f02d03f9844a59098a3bd96d04, type: 3}
@@ -21422,7 +21422,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
   m_Resource: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

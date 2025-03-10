@@ -3,7 +3,7 @@ using UnityEngine.Pool;
 
 public class EXPCollectable : Collectable
 {
-    private int _expValue;
+    private float _expValue;
     private IObjectPool<EXPCollectable> _expPool;
 
     public void SetPool(IObjectPool<EXPCollectable> expPool)
@@ -11,7 +11,7 @@ public class EXPCollectable : Collectable
         _expPool = expPool;
     }
 
-    public void Init(int expValue, Vector3 position)
+    public void Init(float expValue, Vector3 position)
     {
         _expValue = expValue;
         Vector3 newPosition = new(position.x, transform.position.y, position.z);

@@ -21,7 +21,7 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public BeatComponent BeatComponent { get; private set; }
     [field: SerializeField] public HitUI HitUI { get; private set; }
     [field: SerializeField] public EXPCollectable EXPCollectablePrefab { get; private set; }
-    [field: SerializeField] public int ExpValue { get; private set; }
+    [field: SerializeField] public float ExpValue { get; private set; }
     [field: SerializeField] public int InitialDamage { get; private set; }
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public float ImpactRange { get; internal set; }
@@ -81,15 +81,15 @@ public class EnemyStateMachine : StateMachine
 
     public void PowerUp(int power)
     {
-        int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * power * 3f);
-        int defence = Mathf.RoundToInt((float)Health.InitialDefence * power * 5);
+        int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * power * 2f);
+        int defence = Mathf.RoundToInt((float)Health.InitialDefence * power * 2f);
 
         Health.SetMaxHealth(maxHealth);
         Health.RestoreHealth();
 
         Health.SetDefence(defence);
 
-        Damage = new DamageData { Damage = Mathf.Max(InitialDamage * power * 5, InitialDamage), AttackPower = 1 };
+        Damage = new DamageData { Damage = Mathf.Max(InitialDamage * power * 2, InitialDamage), AttackPower = Mathf.Max(power, 1) };
     }
 
     public void SetPool(IObjectPool<EnemyStateMachine> enemyPool)
@@ -99,7 +99,7 @@ public class EnemyStateMachine : StateMachine
 
     public void SetEXP(float exp)
     {
-        ExpValue = Mathf.Max(Mathf.RoundToInt(exp), 1);
+        ExpValue = exp;
     }
 
     private void HandleTakeDamage(DamageData damage)

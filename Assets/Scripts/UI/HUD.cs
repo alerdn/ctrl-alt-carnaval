@@ -15,7 +15,7 @@ public class HUD : MonoBehaviour
 
     [Header("xp")]
     [SerializeField] private Image _expBar;
-    [SerializeField] private SOInt _exp;
+    [SerializeField] private SOFloat _exp;
 
     [Header("Combo")]
     [SerializeField] private Image _comboBar;
@@ -69,9 +69,9 @@ public class HUD : MonoBehaviour
         _lifeBarTween = _lifeBarAux.DOFillAmount((float)currentHP / maxHP, .5f).SetDelay(1f);
     }
 
-    private void UpdateEXPBar(int exp)
+    private void UpdateEXPBar(float exp)
     {
-        _expBar.fillAmount = (float)exp / (float)ExperienceManager.Instance.ExperienceToNextLevel;
+        _expBar.fillAmount = exp / (float)ExperienceManager.Instance.ExperienceToNextLevel;
     }
 
     private void VerifyBeat(bool success)

@@ -5,11 +5,11 @@ public class ExperienceManager : Singleton<ExperienceManager>
 {
     public UnityAction<int> OnLevelUp;
 
-    public int ExperienceToNextLevel => _experienceToNextLevel;
+    public float ExperienceToNextLevel => _experienceToNextLevel;
 
     [SerializeField] private SOInt Level;
-    [SerializeField] private SOInt EXP;
-    [SerializeField] private int _experienceToNextLevel;
+    [SerializeField] private SOFloat EXP;
+    [SerializeField] private float _experienceToNextLevel;
 
     private PlayerStateMachine _player;
 
@@ -27,7 +27,7 @@ public class ExperienceManager : Singleton<ExperienceManager>
         _player = PlayerStateMachine.Instance;
     }
 
-    public void AddExperience(int amount)
+    public void AddExperience(float amount)
     {
         EXP.Value += amount;
         if (EXP.Value >= _experienceToNextLevel)

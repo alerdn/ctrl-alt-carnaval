@@ -50,6 +50,8 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    public bool IsLastWave => CurrentTimeSpan.Minutes >= _lastWave;
+
     [SerializeField] private PlayerStateMachine _player;
     [SerializeField] private SOString _clock;
     [SerializeField] private int _lastWave;
@@ -69,6 +71,10 @@ public class WaveManager : MonoBehaviour
     private IObjectPool<EnemyStateMachine> _enemyPool;
     private TimeSpan _timeSpan;
 
+    private List<EnemyStateMachine> _lastWaveEnemies = new();
+    private bool _lastWaveSpawned;
+    private bool _hasWon;
+
     private void Start()
     {
         CurrentTimeSpan = TimeSpan.FromSeconds(0);
@@ -86,7 +92,7 @@ public class WaveManager : MonoBehaviour
     private void Update()
     {
         CurrentTimeSpan += TimeSpan.FromSeconds(Time.deltaTime);
-        if (CurrentTimeSpan.Minutes >= _lastWave)
+        if (IsLastWave)
         {
             _clock.Value = "HORA DA VERDADE!";
         }
@@ -94,11 +100,17 @@ public class WaveManager : MonoBehaviour
         {
             _clock.Value = $"{CurrentTimeSpan.Minutes:D2}:{CurrentTimeSpan.Seconds:D2}";
         }
+
+        if (_lastWaveSpawned && _lastWaveEnemies.TrueForAll(enemy => !enemy.isActiveAndEnabled) && !_hasWon)
+        {
+            _hasWon = true;
+            PlayerStateMachine.Instance.Win();
+        }
     }
 
     private void SpawnWave()
     {
-        if (CurrentTimeSpan.Minutes >= _lastWave) return;
+        if (IsLastWave) return;
 
         foreach (var enemy in _enemies)
         {
@@ -127,7 +139,9 @@ public class WaveManager : MonoBehaviour
         foreach (var special in specialList)
         {
             EnemyStateMachine enemy = Instantiate(special.Enemy, _enemiesContainer);
-            enemy.Init(GetRandomPointInRing(), 1);
+            enemy.Init(GetRandomPointInRing(), CurrentTimeSpan.Minutes);
+
+            if (IsLastWave) _lastWaveEnemies.Add(enemy);
 
             yield return new WaitForEndOfFrame();
         }
@@ -142,10 +156,7 @@ public class WaveManager : MonoBehaviour
             {
                 for (int j = 0; j < enemiesPerSubWave; j++)
                 {
-                    if (maxEnemiesAmountToSpawn == 0)
-                    {
-                        break;
-                    }
+                    if (maxEnemiesAmountToSpawn == 0) break;
 
                     var enemy = _enemyPool.Get();
                     maxEnemiesAmountToSpawn--;
@@ -157,16 +168,15 @@ public class WaveManager : MonoBehaviour
                         _enemies.Add(enemy);
                     }
 
+                    if (IsLastWave) _lastWaveEnemies.Add(enemy);
+
                     yield return new WaitForEndOfFrame();
                 }
                 yield return new WaitForSeconds(60f / wave.EnemiesSubWaveCount);
             }
         }
 
-        if (CurrentTimeSpan.Minutes >= _lastWave && _enemies.Find(enemy => enemy.isActiveAndEnabled) == null)
-        {
-            PlayerStateMachine.Instance.Win();
-        }
+        if (IsLastWave) _lastWaveSpawned = true;
     }
 
     private Vector3 GetRandomPointInRing()

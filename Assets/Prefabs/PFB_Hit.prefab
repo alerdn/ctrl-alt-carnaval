@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 92795716027950142}
   - component: {fileID: 5195933621915132406}
   m_Layer: 5
-  m_Name: Hit
+  m_Name: PFB_Hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

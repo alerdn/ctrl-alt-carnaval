@@ -54,8 +54,9 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 2819637699459930086, guid: 2d556f9efb0f00c468467299303aeda0, type: 3}
   _initialDamage: 15
   _damageRange: {x: -5, y: 5}
+  _fireFailCooldown: 0.5
   _range: 1
-  _followSpeed: 6
+  _followSpeed: 5
   GroundMask:
     serializedVersion: 2
     m_Bits: 8

@@ -81,15 +81,15 @@ public class EnemyStateMachine : StateMachine
 
     public void PowerUp(int power)
     {
-        int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * power * 2f);
-        int defence = Mathf.RoundToInt((float)Health.InitialDefence * power * 2f);
+        int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * power * 3f);
+        int defence = Mathf.RoundToInt((float)Health.InitialDefence * power * 3f);
 
         Health.SetMaxHealth(maxHealth);
         Health.RestoreHealth();
 
         Health.SetDefence(defence);
 
-        Damage = new DamageData { Damage = Mathf.Max(InitialDamage * power * 2, InitialDamage), AttackPower = Mathf.Max(power, 1) };
+        Damage = new DamageData { Damage = Mathf.Max(InitialDamage * power * 3, InitialDamage), AttackPower = Mathf.Max(power, 1) };
     }
 
     public void SetPool(IObjectPool<EnemyStateMachine> enemyPool)

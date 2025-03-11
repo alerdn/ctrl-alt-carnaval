@@ -4956,10 +4956,12 @@ MonoBehaviour:
   <DashDuration>k__BackingField: 0.1
   <DashLength>k__BackingField: 3
   <DashCooldown>k__BackingField: 0.5
+  <DashAbilityCooldown>k__BackingField: 0.75
   <DashExplosionRadius>k__BackingField: 4
   <DashExplosionPS>k__BackingField: {fileID: 4607938757629593190}
-  <Bomb>k__BackingField: {fileID: 495054686489069743, guid: 32383925a8c7af3498d3a9af10a92cbc, type: 3}
+  <BombPrefab>k__BackingField: {fileID: 495054686489069743, guid: 32383925a8c7af3498d3a9af10a92cbc, type: 3}
   DashCooldownTimeStamp: 0
+  DashAbilityCooldownTimeStamp: 0
   DashExplosion: 0
   DashProtection: 0
   DashBombastic: 0

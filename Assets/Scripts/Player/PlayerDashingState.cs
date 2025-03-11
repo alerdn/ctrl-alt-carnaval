@@ -16,15 +16,14 @@ public class PlayerDashingState : PlayerBaseState
 
     public override void Enter()
     {
-        stateMachine.DashCooldownTimeStamp = Time.time + stateMachine.DashCooldown;
         stateMachine.Health.SetInvulnerable(true);
 
         _remainingDodgeTime = stateMachine.DashDuration;
 
         _isWithinBeatWindow = stateMachine.IsWithinBeatWindow();
-        if (_isWithinBeatWindow)
+        if (!_isWithinBeatWindow)
         {
-            stateMachine.DashCooldownTimeStamp = Time.time + stateMachine.DashCooldown / 2f;
+            stateMachine.DashCooldownTimeStamp = Time.time + stateMachine.DashCooldown;
         }
 
         stateMachine.Animator.CrossFadeInFixedTime(DashHash, .1f);

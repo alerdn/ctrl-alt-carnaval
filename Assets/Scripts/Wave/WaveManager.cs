@@ -41,12 +41,10 @@ public class WaveManager : MonoBehaviour
         get => _timeSpan;
         private set
         {
-            if (value.Minutes != _timeSpan.Minutes)
-            {
-                OnMinuteChanged?.Invoke();
-            }
-
+            bool notify = value.Minutes != _timeSpan.Minutes;
             _timeSpan = value;
+
+            if (notify) OnMinuteChanged?.Invoke();
         }
     }
 
@@ -110,7 +108,7 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnWave()
     {
-        if (IsLastWave) return;
+        if (IsLastWave && _lastWaveSpawned) return;
 
         foreach (var enemy in _enemies)
         {

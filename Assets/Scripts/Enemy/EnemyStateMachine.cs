@@ -81,6 +81,8 @@ public class EnemyStateMachine : StateMachine
 
     public void PowerUp(int power)
     {
+        if (power >= 7) power *= 2;
+
         int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * power * 3f);
         int defence = Mathf.RoundToInt((float)Health.InitialDefence * power * 3f);
 

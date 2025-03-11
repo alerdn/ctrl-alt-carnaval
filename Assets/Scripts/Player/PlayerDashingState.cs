@@ -40,8 +40,10 @@ public class PlayerDashingState : PlayerBaseState
         _remainingDodgeTime -= deltaTime;
         if (_remainingDodgeTime <= 0)
         {
-            if (_isWithinBeatWindow)
+            if (_isWithinBeatWindow && Time.time > stateMachine.DashAbilityCooldownTimeStamp)
             {
+                stateMachine.DashAbilityCooldownTimeStamp = Time.time + stateMachine.DashAbilityCooldown;
+
                 if (stateMachine.DashExplosion)
                 {
                     stateMachine.DashExplosionPS.Play();
@@ -65,7 +67,7 @@ public class PlayerDashingState : PlayerBaseState
 
                 if (stateMachine.DashBombastic)
                 {
-                    Object.Instantiate(stateMachine.Bomb, stateMachine.transform.position, Quaternion.identity);
+                    stateMachine.BombPool.Get();
                 }
             }
 

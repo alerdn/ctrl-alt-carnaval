@@ -19,6 +19,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private int _initialDamage;
     [SerializeField] private Vector2 _damageRange;
+    [SerializeField] private float _fireFailCooldown;
     [SerializeField] private float _range;
     [SerializeField] private float _followSpeed;
     [SerializeField] private LayerMask GroundMask;
@@ -29,6 +30,7 @@ public class Gun : MonoBehaviour
 
     private Camera _mainCamera;
     private float _startYPostion;
+    private float _fireCooldown;
 
     private void Start()
     {
@@ -50,6 +52,11 @@ public class Gun : MonoBehaviour
     {
         MoveToPlayer();
         Aim();
+
+        if (_fireCooldown > 0)
+        {
+            _fireCooldown -= Time.deltaTime;
+        }
     }
 
     public void Init(PlayerStateMachine player)
@@ -134,7 +141,13 @@ public class Gun : MonoBehaviour
 
     private void Fire()
     {
+        if (_fireCooldown > 0) return;
+
         bool withinBeatWindow = _player.IsWithinBeatWindow();
+        if (!withinBeatWindow)
+        {
+            _fireCooldown = _fireFailCooldown;
+        }
 
         List<Bullet> bullets = new List<Bullet>();
 
@@ -174,7 +187,7 @@ public class Gun : MonoBehaviour
                 for (int i = 0; i < bullets.Count; i++)
                 {
                     Bullet extraBullet = _bulletPool.Get();
-                    extraBullet.Fire(withinBeatWindow, ShootingPoint.position, bullets[i].transform.rotation, .9f);
+                    extraBullet.Fire(withinBeatWindow, ShootingPoint.position, bullets[i].transform.rotation, .6f);
 
                     extraBullets.Add(extraBullet);
                 }

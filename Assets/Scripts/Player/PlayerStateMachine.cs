@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Pool;
 
 public class PlayerStateMachine : StateMachine
 {
@@ -25,15 +26,18 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public float DashDuration { get; private set; }
     [field: SerializeField] public float DashLength { get; private set; }
     [field: SerializeField] public float DashCooldown { get; private set; }
+    [field: SerializeField] public float DashAbilityCooldown { get; private set; }
     [field: SerializeField] public float DashExplosionRadius { get; private set; }
     [field: SerializeField] public ParticleSystem DashExplosionPS { get; private set; }
-    [field: SerializeField] public Bomb Bomb { get; private set; }
+    [field: SerializeField] public Bomb BombPrefab { get; private set; }
 
     private Tween _hitColorTween;
 
     public Transform MainCameraTransform { get; private set; }
+    public IObjectPool<Bomb> BombPool { get; private set; }
 
     public float DashCooldownTimeStamp;
+    public float DashAbilityCooldownTimeStamp;
 
     // Power Ups
     public bool DashExplosion;
@@ -53,6 +57,7 @@ public class PlayerStateMachine : StateMachine
         InputReader.SetControllerMode(ControllerMode.Gameplay);
 
         Gun.Init(this);
+        BombPool = new LinkedPool<Bomb>(OnCreate, OnTakeFromPool, OnReturnToPool, OnDestroyItem, true, 20);
 
         Health.OnTakeDamage += HandleTakeDamage;
         Health.OnDie += HandleDie;
@@ -143,6 +148,33 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerWinState(this));
     }
 
+    #region Pool
+
+    private Bomb OnCreate()
+    {
+        Bomb bomb = Instantiate(BombPrefab);
+        bomb.gameObject.SetActive(false);
+
+        return bomb;
+    }
+
+    private void OnTakeFromPool(Bomb bomb)
+    {
+        bomb.transform.position = transform.position;
+        bomb.gameObject.SetActive(true);
+    }
+
+    private void OnReturnToPool(Bomb bomb)
+    {
+        bomb.gameObject.SetActive(false);
+    }
+
+    private void OnDestroyItem(Bomb bomb)
+    {
+        Destroy(bomb.gameObject);
+    }
+
+    #endregion
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

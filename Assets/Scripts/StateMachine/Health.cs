@@ -100,7 +100,7 @@ public class Health : MonoBehaviour
     {
         if (CurrentHealth == 0 || _isInvulnerable) return;
 
-        int damageBase = data.IsCritical ? data.Damage * 4 : data.Damage;
+        int damageBase = data.IsCritical ? data.Damage * 4 : data.Damage / 4;
         int damage = Mathf.RoundToInt((float)damageBase * ((float)data.AttackPower / (float)CurrentDefence));
 
         if (Shield > 0)

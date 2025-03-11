@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using NaughtyAttributes;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PowerUpController : MonoBehaviour
@@ -60,23 +58,35 @@ public class PowerUpController : MonoBehaviour
         _frame.gameObject.SetActive(true);
         _foreground.DOLocalMoveX(0, .75f).From(1920).SetDelay(.5f).SetEase(_introEase).SetUpdate(true);
 
-        List<PowerUPData> powerUps;
-        if (level % _specialPowerUpRate == 0)
-        {
-            powerUps = _allPowerUpsData.FindAll(p => p.IsSpecial == true && p.IsActive == false);
-        }
-        else
-        {
-            powerUps = _allPowerUpsData.FindAll(p => p.IsSpecial == false);
-        }
+        var specialList = _allPowerUpsData.FindAll(p => p.IsSpecial && !p.IsActive);
+        var regularList = _allPowerUpsData.FindAll(p => !p.IsSpecial);
 
+        List<PowerUPData> powerUps;
+        powerUps = level == 2
+            // Começando com lista especial
+            ? specialList
+
+            // Se o level não for múltiplo do rate ou a lista especial está zerada, usar a lista regular
+            : (level % _specialPowerUpRate != 0 || specialList.Count == 0)
+                ? regularList
+                : specialList.Count >= 3 
+                    ? specialList
+
+                    // Se houver menos de 3 power ups especiais, completar com power ups regulares
+                    : specialList.Concat(regularList.GetRandomRange(3 - specialList.Count)).ToList();
+
+
+        // Reset powerups
+        powerUps.ForEach(p => p.IsSelected = false);
+
+        // Select powerups
         foreach (var powerUpUI in _powerUpsUI)
         {
-            if (powerUps.Count == 0)
-            {
-                powerUps = _allPowerUpsData.FindAll(p => p.IsSpecial == false);
-            }
-            powerUpUI.Init(powerUps.GetRandom());
+            // Impede que apareçam power ups repetidos
+            PowerUPData powerUp = powerUps.FindAll(p => !p.IsSelected).GetRandom();
+            powerUp.IsSelected = true;
+
+            powerUpUI.Init(powerUp);
         }
     }
 
@@ -100,7 +110,7 @@ public class PowerUpController : MonoBehaviour
                     Damage = Mathf.RoundToInt((float)_player.Gun.Damage.Damage * 1.1f),
                     AttackPower = Mathf.RoundToInt((float)_player.Gun.Damage.AttackPower * 1.1f)
                 };
-                Debug.Log($"Damage increased to {_player.Gun.Damage} and attack to {_player.Gun.Damage.AttackPower}");
+                Debug.Log($"Damage increased to {_player.Gun.Damage}");
                 break;
             case PowerUp.Health10Percent:
                 _player.Health.SetMaxHealth(Mathf.RoundToInt((float)_player.Health.CurrentMaxHealth * 1.1f));

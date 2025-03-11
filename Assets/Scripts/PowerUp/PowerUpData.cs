@@ -23,4 +23,5 @@ public class PowerUPData : ScriptableObject
     public string Description;
     public bool IsSpecial;
     public bool IsActive;
+    public bool IsSelected;
 }

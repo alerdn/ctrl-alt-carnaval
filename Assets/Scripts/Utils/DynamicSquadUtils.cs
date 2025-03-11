@@ -10,6 +10,23 @@ public static class DynamicSquadUtils
         return list[Random.Range(0, list.Count)];
     }
 
+    public static List<T> GetRandomRange<T>(this List<T> list, int range)
+    {
+        List<T> chosenList = new();
+
+        while (chosenList.Count < Mathf.Min(list.Count, range))
+        {
+            T item = list[Random.Range(0, list.Count)];
+
+            if (!chosenList.Contains(item))
+            {
+                chosenList.Add(item);
+            }
+        }
+
+        return chosenList;
+    }
+
     public static void Shuffle<T>(this List<T> list)
     {
         var count = list.Count;

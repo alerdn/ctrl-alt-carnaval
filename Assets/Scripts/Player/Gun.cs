@@ -127,7 +127,14 @@ public class Gun : MonoBehaviour
 
     private (bool success, Vector3 position) GetMousePosition()
     {
-        var ray = _mainCamera.ScreenPointToRay(_player.InputReader.MousePosition);
+        var aimPosition = _player.InputReader.AimPosition;
+
+        // Gamepad
+        if (_player.InputReader.AimPosition.magnitude <= 1)
+        {
+        }
+
+        var ray = _mainCamera.ScreenPointToRay(aimPosition);
 
         if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, GroundMask))
         {

@@ -110,50 +110,38 @@ public class PowerUpController : MonoBehaviour
                     Damage = Mathf.RoundToInt((float)_player.Gun.Damage.Damage * 1.1f),
                     AttackPower = Mathf.RoundToInt((float)_player.Gun.Damage.AttackPower * 1.1f)
                 };
-                Debug.Log($"Damage increased to {_player.Gun.Damage}");
                 break;
             case PowerUp.Health10Percent:
                 _player.Health.SetMaxHealth(Mathf.RoundToInt((float)_player.Health.CurrentMaxHealth * 1.1f));
                 _player.Health.RestoreHealth(Mathf.RoundToInt(_player.Health.CurrentMaxHealth * .1f));
-                Debug.Log($"Health increased to {_player.Health.CurrentHealth}");
                 break;
             case PowerUp.Defence10Percent:
                 _player.Health.SetDefence(Mathf.RoundToInt((float)_player.Health.CurrentDefence * 1.1f));
-                Debug.Log($"Defence increased to {_player.Health.CurrentDefence}");
                 break;
             case PowerUp.DashImprovement:
                 _player.ImproveDash(.25f);
-                Debug.Log($"Dash improved to {_player.DashLength}");
                 break;
-
 
             case PowerUp.DashExplosion:
                 _player.DashExplosion = true;
-                Debug.Log("Dash Explosivo habilitado");
                 break;
             case PowerUp.DashProtection:
                 _player.DashProtection = true;
-                Debug.Log("Dash Protection habilitado");
                 break;
             case PowerUp.FireTriple:
                 _player.Gun.FireTriple = true;
-                Debug.Log("Fire Triple habilitado");
                 break;
             case PowerUp.FireBack:
                 _player.Gun.FireBack = true;
-                Debug.Log("Fire Back habilitado");
                 break;
             case PowerUp.FireHeal:
                 _player.Gun.FireHeal = true;
-                Debug.Log("Fire Heal habilitado");
                 break;
             case PowerUp.FireMultiple:
                 _player.Gun.FireMultiple = true;
-                Debug.Log("Fire Multiple habilitado");
                 break;
             case PowerUp.DashBombastic:
                 _player.DashBombastic = true;
-                Debug.Log("Dash Bombastic habilitado");
                 break;
         }
 

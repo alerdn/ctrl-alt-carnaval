@@ -19,7 +19,7 @@ public class InputReader : ScriptableObject, IPlayerActions, IUIActions
     public UnityAction DashEvent;
 
     public Vector2 MovementValue { get; private set; }
-    public Vector3 MousePosition { get; private set; }
+    public Vector3 AimPosition { get; private set; }
 
     private Controls _controls;
     private ControllerMode _controllerMode;
@@ -57,7 +57,7 @@ public class InputReader : ScriptableObject, IPlayerActions, IUIActions
 
     public void OnAim(InputAction.CallbackContext context)
     {
-        MousePosition = context.ReadValue<Vector2>();
+        AimPosition = context.ReadValue<Vector2>();
     }
 
     public void OnFire(InputAction.CallbackContext context)

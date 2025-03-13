@@ -32,6 +32,7 @@ public class EnemyAttackingState : EnemyBaseState
         if (stateMachine.Player.Health.IsDead)
         {
             stateMachine.SwitchState(new EnemyIdleState(stateMachine));
+            return;
         }
 
         switch (stateMachine.Type)
@@ -40,6 +41,7 @@ public class EnemyAttackingState : EnemyBaseState
                 if (!IsInAttackRange())
                 {
                     stateMachine.SwitchState(new EnemyChasingState(stateMachine));
+                    return;
                 }
                 break;
             case EnemyType.Charger:
@@ -59,6 +61,7 @@ public class EnemyAttackingState : EnemyBaseState
                     if (_chargingCooldown <= 0)
                     {
                         stateMachine.SwitchState(new EnemyChasingState(stateMachine));
+                        return;
                     }
                 }
                 break;
@@ -66,6 +69,7 @@ public class EnemyAttackingState : EnemyBaseState
                 if (!IsInAttackRange())
                 {
                     stateMachine.SwitchState(new EnemyChasingState(stateMachine));
+                    return;
                 }
                 break;
         }

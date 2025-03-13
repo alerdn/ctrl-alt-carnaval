@@ -71,6 +71,7 @@ public class PlayerDashingState : PlayerBaseState
             }
 
             stateMachine.SwitchState(new PlayerFreeLookState(stateMachine));
+            return;
         }
     }
 

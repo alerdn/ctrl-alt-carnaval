@@ -46,12 +46,13 @@ public class Gun : MonoBehaviour
     private void OnDestroy()
     {
         _player.InputReader.FireEvent -= Fire;
+        _player.InputReader.AimEvent -= Aim;
     }
 
     private void Update()
     {
         MoveToPlayer();
-        Aim();
+        // Aim();
 
         if (_fireCooldown > 0)
         {
@@ -63,6 +64,7 @@ public class Gun : MonoBehaviour
     {
         _player = player;
         _player.InputReader.FireEvent += Fire;
+        _player.InputReader.AimEvent += Aim;
     }
 
     public DamageData GetDamage()
@@ -111,11 +113,11 @@ public class Gun : MonoBehaviour
         }
     }
 
-    private void Aim()
+    private void Aim(Vector2 aimPosition, bool isGamepad)
     {
         if (Time.timeScale == 0) return;
 
-        var (success, position) = GetMousePosition();
+        var (success, position) = GetAimPosition(aimPosition, isGamepad);
         if (success)
         {
             var direction = position - transform.position;
@@ -125,24 +127,26 @@ public class Gun : MonoBehaviour
         }
     }
 
-    private (bool success, Vector3 position) GetMousePosition()
+    private (bool success, Vector3 position) GetAimPosition(Vector2 aimPosition, bool isGamepad)
     {
-        var aimPosition = _player.InputReader.AimPosition;
-
-        // Gamepad
-        if (_player.InputReader.AimPosition.magnitude <= 1)
+        if (isGamepad)
         {
-        }
-
-        var ray = _mainCamera.ScreenPointToRay(aimPosition);
-
-        if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, GroundMask))
-        {
-            return (success: true, position: hitInfo.point);
+            Cursor.visible = false;
+            return (success: true, position: transform.position + new Vector3(aimPosition.x, 0, aimPosition.y) * 10);
         }
         else
         {
-            return (success: false, position: Vector3.zero);
+            Cursor.visible = true;
+            var ray = _mainCamera.ScreenPointToRay(aimPosition);
+
+            if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, GroundMask))
+            {
+                return (success: true, position: hitInfo.point);
+            }
+            else
+            {
+                return (success: false, position: Vector3.zero);
+            }
         }
     }
 

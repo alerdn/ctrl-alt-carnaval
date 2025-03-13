@@ -17,12 +17,38 @@ public class InputReader : ScriptableObject, IPlayerActions, IUIActions
     public UnityAction FireEvent;
     public UnityAction InteractEvent;
     public UnityAction DashEvent;
+    public UnityAction<Vector2, bool> AimEvent;
 
     public Vector2 MovementValue { get; private set; }
-    public Vector3 AimPosition { get; private set; }
+    public Vector2 MouseAimPosition
+    {
+        get => _mouseAimPosition; private set
+        {
+            if (value != _mouseAimPosition)
+            {
+                AimEvent?.Invoke(value, false);
+            }
+
+            _mouseAimPosition = value;
+        }
+    }
+    public Vector2 JoystickAimPosition
+    {
+        get => _joystickAimPosition; private set
+        {
+            if (value != _joystickAimPosition && value != Vector2.zero)
+            {
+                AimEvent?.Invoke(value, true);
+            }
+
+            _joystickAimPosition = value;
+        }
+    }
 
     private Controls _controls;
     private ControllerMode _controllerMode;
+    private Vector2 _mouseAimPosition;
+    private Vector2 _joystickAimPosition;
 
     private void OnEnable()
     {
@@ -57,7 +83,12 @@ public class InputReader : ScriptableObject, IPlayerActions, IUIActions
 
     public void OnAim(InputAction.CallbackContext context)
     {
-        AimPosition = context.ReadValue<Vector2>();
+        MouseAimPosition = context.ReadValue<Vector2>();
+    }
+
+    public void OnAimPad(InputAction.CallbackContext context)
+    {
+        JoystickAimPosition = context.ReadValue<Vector2>();
     }
 
     public void OnFire(InputAction.CallbackContext context)

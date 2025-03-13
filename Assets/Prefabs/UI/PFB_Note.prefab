@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4576540179121485013}
   - component: {fileID: 5701572411978361005}
   m_Layer: 0
-  m_Name: Note
+  m_Name: PFB_Note
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

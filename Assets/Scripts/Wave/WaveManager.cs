@@ -50,7 +50,6 @@ public class WaveManager : MonoBehaviour
 
     public bool IsLastWave => CurrentTimeSpan.Minutes >= _lastWave;
 
-    [SerializeField] private PlayerStateMachine _player;
     [SerializeField] private SOString _clock;
     [SerializeField] private int _lastWave;
     [SerializeField] private List<WaveConfig> _waves;
@@ -65,6 +64,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Vector2 _yBoudries = new(-25f, 25f);
     [SerializeField] private int _maxEnemiesSpawned = 100;
 
+    private PlayerStateMachine _player;
     private List<EnemyStateMachine> _enemies = new();
     private IObjectPool<EnemyStateMachine> _enemyPool;
     private TimeSpan _timeSpan;
@@ -75,6 +75,7 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
+        _player = PlayerStateMachine.Instance;
         CurrentTimeSpan = TimeSpan.FromSeconds(0);
         _enemyPool = new LinkedPool<EnemyStateMachine>(OnCreateEnemy, OnTakeFromPool, OnReturnToPool, OnDestroyEnemy, true);
 

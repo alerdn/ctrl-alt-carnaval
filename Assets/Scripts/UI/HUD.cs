@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     [SerializeField] private Image _centerImage;
-    [SerializeField] private Gun _gun;
 
     [Header("HP")]
     [SerializeField] private Image _lifeBarAux;
@@ -22,6 +21,7 @@ public class HUD : MonoBehaviour
     [SerializeField] private TMP_Text _comboIcon;
     [SerializeField] private TMP_Text _comboText;
 
+    private Gun _gun;
     private Tween _lifeBarTween;
     [SerializeField] private float _comboPoints;
     private string[] _comboIcons = new string[] { "", "E", "D", "C", "B", "A", "S" };
@@ -37,6 +37,7 @@ public class HUD : MonoBehaviour
         _comboIcon.text = _comboIcons[_currentComboIndex];
         _comboText.text = _comboTexts[_currentComboIndex];
 
+        _gun = PlayerStateMachine.Instance.Gun;
         PlayerStateMachine.Instance.OnBeatAction += VerifyBeat;
         PlayerStateMachine.Instance.Health.OnHealthChanged += UpdateLifeBar;
         _exp.OnValueChanged += UpdateEXPBar;

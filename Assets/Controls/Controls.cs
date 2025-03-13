@@ -46,6 +46,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""AimPad"",
+                    ""type"": ""Value"",
+                    ""id"": ""4ea53d9f-d5f4-4c13-a9d0-77a92afa5c98"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""TogglePause"",
                     ""type"": ""Button"",
                     ""id"": ""6a3ce81b-4f4d-44a0-8ba6-2785cffbb568"",
@@ -176,7 +185,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f2de152d-2cea-4534-aa72-36b860f96290"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -219,12 +228,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d4412919-6b0e-4e7b-b49f-65eb7aa19779"",
+                    ""id"": ""8cbde6f8-ab4a-420e-99ed-feddfc85e81a"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Aim"",
+                    ""action"": ""AimPad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -293,6 +302,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_AimPad = m_Player.FindAction("AimPad", throwIfNotFound: true);
         m_Player_TogglePause = m_Player.FindAction("TogglePause", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
@@ -368,6 +378,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_AimPad;
     private readonly InputAction m_Player_TogglePause;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Dash;
@@ -377,6 +388,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @AimPad => m_Wrapper.m_Player_AimPad;
         public InputAction @TogglePause => m_Wrapper.m_Player_TogglePause;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
@@ -395,6 +407,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
+            @AimPad.started += instance.OnAimPad;
+            @AimPad.performed += instance.OnAimPad;
+            @AimPad.canceled += instance.OnAimPad;
             @TogglePause.started += instance.OnTogglePause;
             @TogglePause.performed += instance.OnTogglePause;
             @TogglePause.canceled += instance.OnTogglePause;
@@ -414,6 +429,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
+            @AimPad.started -= instance.OnAimPad;
+            @AimPad.performed -= instance.OnAimPad;
+            @AimPad.canceled -= instance.OnAimPad;
             @TogglePause.started -= instance.OnTogglePause;
             @TogglePause.performed -= instance.OnTogglePause;
             @TogglePause.canceled -= instance.OnTogglePause;
@@ -508,6 +526,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnAimPad(InputAction.CallbackContext context);
         void OnTogglePause(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);

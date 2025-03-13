@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "AimPad",
+                    "type": "Value",
+                    "id": "4ea53d9f-d5f4-4c13-a9d0-77a92afa5c98",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "TogglePause",
                     "type": "Button",
                     "id": "6a3ce81b-4f4d-44a0-8ba6-2785cffbb568",
@@ -154,7 +163,7 @@
                 {
                     "name": "",
                     "id": "f2de152d-2cea-4534-aa72-36b860f96290",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -197,12 +206,12 @@
                 },
                 {
                     "name": "",
-                    "id": "d4412919-6b0e-4e7b-b49f-65eb7aa19779",
+                    "id": "8cbde6f8-ab4a-420e-99ed-feddfc85e81a",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Aim",
+                    "action": "AimPad",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

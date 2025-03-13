@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Step>k__BackingField: 4
-  _pulseSize: 1.5
+  _pulseSize: 1.75
   _returnSpeed: 5
 --- !u!4 &3313752847701598202 stripped
 Transform:

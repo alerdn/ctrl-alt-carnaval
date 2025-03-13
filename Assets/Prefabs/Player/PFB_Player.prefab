@@ -4950,7 +4950,7 @@ MonoBehaviour:
   <Renderer>k__BackingField: {fileID: 2443534670679157989}
   <ForceReceiver>k__BackingField: {fileID: 3588847281323004012}
   <BeatComp>k__BackingField: {fileID: 5620323793596279876}
-  <BeatThreshold>k__BackingField: 0.1
+  <BeatThreshold>k__BackingField: 0.15
   <FreeLookMovement>k__BackingField: 6
   <RotationDamping>k__BackingField: 10
   <DashDuration>k__BackingField: 0.1

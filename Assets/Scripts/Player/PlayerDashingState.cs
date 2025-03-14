@@ -5,13 +5,13 @@ public class PlayerDashingState : PlayerBaseState
 {
     private readonly int DashHash = Animator.StringToHash("Dash");
 
-    private Vector3 _dodgingDirection;
+    private Vector3 _dashingDirection;
     private float _remainingDodgeTime;
     private bool _isWithinBeatWindow;
 
-    public PlayerDashingState(PlayerStateMachine stateMachine, Vector3 dodgingDirection) : base(stateMachine)
+    public PlayerDashingState(PlayerStateMachine stateMachine, Vector3 dashingDirection) : base(stateMachine)
     {
-        _dodgingDirection = dodgingDirection;
+        _dashingDirection = dashingDirection;
     }
 
     public override void Enter()
@@ -92,8 +92,8 @@ public class PlayerDashingState : PlayerBaseState
         forward.Normalize();
         right.Normalize();
 
-        movement += _dodgingDirection.y * stateMachine.DashLength * forward / stateMachine.DashDuration;
-        movement += _dodgingDirection.x * stateMachine.DashLength * right / stateMachine.DashDuration;
+        movement += _dashingDirection.y * stateMachine.DashLength * forward / stateMachine.DashDuration;
+        movement += _dashingDirection.x * stateMachine.DashLength * right / stateMachine.DashDuration;
 
         return movement;
     }

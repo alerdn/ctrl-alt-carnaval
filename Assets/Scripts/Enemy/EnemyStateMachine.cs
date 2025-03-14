@@ -19,7 +19,7 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public Health Health { get; private set; }
     [field: SerializeField] public Renderer Renderer { get; private set; }
     [field: SerializeField] public BeatComponent BeatComponent { get; private set; }
-    [field: SerializeField] public HitUI HitUI { get; private set; }
+    [field: SerializeField] public DialogueUI HitUI { get; private set; }
     [field: SerializeField] public EXPCollectable EXPCollectablePrefab { get; private set; }
     [field: SerializeField] public float ExpValue { get; private set; }
     [field: SerializeField] public int InitialDamage { get; private set; }
@@ -81,7 +81,7 @@ public class EnemyStateMachine : StateMachine
 
     public void PowerUp(int power)
     {
-        if (power >= 7) power *= 2;
+        if (power >= 7) power = Mathf.RoundToInt((float)power * 1.5f);
 
         int maxHealth = Mathf.RoundToInt((float)Health.InitialMaxHealth * power * 3f);
         int defence = Mathf.RoundToInt((float)Health.InitialDefence * power * 3f);

@@ -15,6 +15,12 @@ public class Gun : MonoBehaviour
 
     public DamageData Damage;
 
+    [Header("Dialogue")]
+    [SerializeField] private DialogueUI _chatUI;
+    [SerializeField] private List<string> _successTexts;
+    [SerializeField] private List<string> _failTexts;
+
+    [Header("Settings")]
     [SerializeField] private Transform ShootingPoint;
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private int _initialDamage;
@@ -158,9 +164,10 @@ public class Gun : MonoBehaviour
         if (!withinBeatWindow)
         {
             _fireCooldown = _fireFailCooldown;
+            _chatUI.ShowChatText(_failTexts.GetRandom());
         }
 
-        List<Bullet> bullets = new List<Bullet>();
+        List<Bullet> bullets = new();
 
         Bullet bullet = _bulletPool.Get();
         bullet.Fire(withinBeatWindow, ShootingPoint.position, transform.rotation);
@@ -169,6 +176,8 @@ public class Gun : MonoBehaviour
 
         if (withinBeatWindow)
         {
+            if (Random.Range(0, 10) <= 2) _chatUI.ShowChatText(_successTexts.GetRandom());
+
             if (FireTriple)
             {
                 float angleOffset = 20f;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4427319268181716579}
   - component: {fileID: 6300200667177406859}
   m_Layer: 0
-  m_Name: Health PS
+  m_Name: PFB_Healing_PS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

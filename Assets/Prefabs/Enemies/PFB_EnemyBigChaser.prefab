@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 4.91}
+  m_AnchoredPosition: {x: 0, y: 3.14}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &907355379374452616
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 2837659408140359372}
   - component: {fileID: 5280614818953070976}
   m_Layer: 8
-  m_Name: PFB_EnemyBossRobot
+  m_Name: PFB_EnemyBigChaser
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,7 @@ Transform:
   m_Children:
   - {fileID: 7446730398554223252}
   - {fileID: 1003461595447056697}
-  - {fileID: 8919367879019744643}
+  - {fileID: 7165811371073131841}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3538139104254785400
@@ -189,10 +189,10 @@ MonoBehaviour:
   <HitUI>k__BackingField: {fileID: 1029580453750339995}
   <EXPCollectablePrefab>k__BackingField: {fileID: 2654649969164371957, guid: f17398c55db96dc48beb5f680d521620, type: 3}
   <ExpValue>k__BackingField: 0
-  <InitialDamage>k__BackingField: 200
+  <InitialDamage>k__BackingField: 20
   <AttackRange>k__BackingField: 1.5
   <ImpactRange>k__BackingField: 0
-  <HealEffect>k__BackingField: {fileID: 8039101057248304509}
+  <HealEffect>k__BackingField: {fileID: 8585401838545929663}
   _debug: 0
 --- !u!114 &1605702325584611535
 MonoBehaviour:
@@ -206,9 +206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f19d1e8b360a9243ad920be2c88ff5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shieldEffect: {fileID: 0}
-  _initialMaxHealth: 1000
-  _initialDefence: 30
+  _initialMaxHealth: 100
+  _initialDefence: 1
   _health: 0
   _currentMaxHealth: 0
   _defence: 0
@@ -273,7 +272,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &5971879463543517982
+--- !u!1001 &5356334764224850908
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -330,15 +329,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a368333e1e9f423489735766ad319e5a, type: 3}
---- !u!198 &8039101057248304509 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4427319268181716579, guid: a368333e1e9f423489735766ad319e5a, type: 3}
-  m_PrefabInstance: {fileID: 5971879463543517982}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8919367879019744643 stripped
+--- !u!4 &7165811371073131841 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2965503183955590813, guid: a368333e1e9f423489735766ad319e5a, type: 3}
-  m_PrefabInstance: {fileID: 5971879463543517982}
+  m_PrefabInstance: {fileID: 5356334764224850908}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8585401838545929663 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4427319268181716579, guid: a368333e1e9f423489735766ad319e5a, type: 3}
+  m_PrefabInstance: {fileID: 5356334764224850908}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6976815427730019711
 PrefabInstance:
@@ -374,15 +373,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e17f0abdb1adfb043a93e068d87300a9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e17f0abdb1adfb043a93e068d87300a9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e17f0abdb1adfb043a93e068d87300a9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e17f0abdb1adfb043a93e068d87300a9, type: 3}
       propertyPath: m_LocalPosition.x

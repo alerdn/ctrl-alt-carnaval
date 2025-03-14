@@ -29,7 +29,6 @@ public record SpecialEnemyData
     public EnemyStateMachine Enemy;
     public int WaveNumber;
     public int MaxAmount;
-    public int CurrentAmount;
 }
 
 public class WaveManager : MonoBehaviour
@@ -53,6 +52,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private SOString _clock;
     [SerializeField] private int _lastWave;
     [SerializeField] private List<WaveConfig> _waves;
+    [SerializeField] private PlayerStateMachine _player;
     [SerializeField] private Transform _enemiesContainer;
     [SerializeField] private List<EnemyData> _enemiesData;
     [SerializeField] private List<SpecialEnemyData> _specialEnemiesData;
@@ -64,7 +64,6 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Vector2 _yBoudries = new(-25f, 25f);
     [SerializeField] private int _maxEnemiesSpawned = 100;
 
-    private PlayerStateMachine _player;
     private List<EnemyStateMachine> _enemies = new();
     private IObjectPool<EnemyStateMachine> _enemyPool;
     private TimeSpan _timeSpan;
@@ -75,7 +74,6 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        _player = PlayerStateMachine.Instance;
         CurrentTimeSpan = TimeSpan.FromSeconds(0);
         _enemyPool = new LinkedPool<EnemyStateMachine>(OnCreateEnemy, OnTakeFromPool, OnReturnToPool, OnDestroyEnemy, true);
 
@@ -126,23 +124,19 @@ public class WaveManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        var specialList = _specialEnemiesData.FindAll(data =>
-              {
-                  if (CurrentTimeSpan.Minutes != data.WaveNumber) return false;
-                  if (data.CurrentAmount >= data.MaxAmount) return false;
-
-                  data.CurrentAmount++;
-                  return true;
-              });
+        var specialList = _specialEnemiesData.FindAll(data => CurrentTimeSpan.Minutes == data.WaveNumber);
 
         foreach (var special in specialList)
         {
-            EnemyStateMachine enemy = Instantiate(special.Enemy, _enemiesContainer);
-            enemy.Init(GetRandomPointInRing(), CurrentTimeSpan.Minutes);
+            for (int i = 0; i < special.MaxAmount; i++)
+            {
+                EnemyStateMachine enemy = Instantiate(special.Enemy, _enemiesContainer);
+                enemy.Init(GetRandomPointInRing(), CurrentTimeSpan.Minutes);
 
-            if (IsLastWave) _lastWaveEnemies.Add(enemy);
+                if (IsLastWave) _lastWaveEnemies.Add(enemy);
 
-            yield return new WaitForEndOfFrame();
+                yield return new WaitForEndOfFrame();
+            }
         }
 
         int maxEnemiesAmountToSpawn = Mathf.Max(_maxEnemiesSpawned - _enemies.FindAll(enemy => enemy.isActiveAndEnabled).Count, 0);

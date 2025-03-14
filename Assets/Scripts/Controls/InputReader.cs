@@ -46,7 +46,7 @@ public class InputReader : ScriptableObject, IPlayerActions, IUIActions
     }
 
     private Controls _controls;
-    private ControllerMode _controllerMode;
+    [SerializeField] private ControllerMode _controllerMode;
     private Vector2 _mouseAimPosition;
     private Vector2 _joystickAimPosition;
 
@@ -54,6 +54,7 @@ public class InputReader : ScriptableObject, IPlayerActions, IUIActions
     {
         _controls ??= new Controls();
         _controls.Player.SetCallbacks(this);
+        _controls.UI.SetCallbacks(this);
     }
 
     public void SetControllerMode(ControllerMode mode)
@@ -74,6 +75,8 @@ public class InputReader : ScriptableObject, IPlayerActions, IUIActions
                 _controls.UI.Disable();
                 break;
         }
+
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void OnMove(InputAction.CallbackContext context)

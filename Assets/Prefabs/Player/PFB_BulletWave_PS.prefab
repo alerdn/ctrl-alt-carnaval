@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 696203847286046152}
   - component: {fileID: 2954074918076827667}
   m_Layer: 0
-  m_Name: Bullet Wave PS
+  m_Name: PFB_BulletWave_PS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

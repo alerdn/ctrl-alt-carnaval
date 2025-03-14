@@ -39,7 +39,12 @@ public class PlayerFreeLookState : PlayerBaseState
 
     private void Dash()
     {
-        if (Time.time > stateMachine.DashCooldownTimeStamp)
-            stateMachine.SwitchState(new PlayerDashingState(stateMachine, stateMachine.InputReader.MovementValue));
+        if (Time.time < stateMachine.DashCooldownTimeStamp) return;
+
+        Vector2 dashDirection = stateMachine.InputReader.MovementValue;
+        if (dashDirection == Vector2.zero) return;
+
+        stateMachine.SwitchState(new PlayerDashingState(stateMachine, dashDirection));
+
     }
 }

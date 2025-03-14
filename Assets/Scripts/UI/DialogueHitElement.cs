@@ -1,19 +1,11 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Pool;
 
-public class HitElement : MonoBehaviour
+public class DialogueHitElement : DialogueElement
 {
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private TMP_Text _text;
-
-    private IObjectPool<HitElement> _hitElementPool;
-
-    public void SetPool(IObjectPool<HitElement> hitElementPool)
-    {
-        _hitElementPool = hitElementPool;
-    }
 
     public void Init(DamageData data)
     {
@@ -26,7 +18,7 @@ public class HitElement : MonoBehaviour
         {
             _canvasGroup.DOFade(0f, .25f).SetDelay(.5f).OnComplete(() =>
             {
-                _hitElementPool.Release(this);
+                elementPool.Release(this);
             });
         });
     }

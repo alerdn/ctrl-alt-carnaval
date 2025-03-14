@@ -3,12 +3,10 @@ using UnityEngine;
 public class PlayerWinState : PlayerBaseState
 {
     private readonly int WinHash = Animator.StringToHash("Win");
-    private float _respawnDelay = 5f;
+    private float _respawnDelay = 3f;
     private bool _loading;
 
-    public PlayerWinState(PlayerStateMachine stateMachine) : base(stateMachine)
-    {
-    }
+    public PlayerWinState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
     public override void Enter()
     {
@@ -28,8 +26,5 @@ public class PlayerWinState : PlayerBaseState
         }
     }
 
-    public override void Exit()
-    {
-
-    }
+    public override void Exit() { }
 }

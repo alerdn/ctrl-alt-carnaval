@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f19d1e8b360a9243ad920be2c88ff5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldEffect: {fileID: 0}
   _initialMaxHealth: 30
   _initialDefence: 1
   _health: 0
@@ -180,7 +181,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.287}
+  m_AnchoredPosition: {x: 0, y: 1.28}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4125852468539425991
@@ -272,6 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvas: {fileID: 5828987439086193696}
   _hitTextPrefab: {fileID: 5195933621915132406, guid: 9c3c5528a5b997d458dd547233243b19, type: 3}
+  _chatTextPrefab: {fileID: 0}
 --- !u!1001 &2993391246023768732
 PrefabInstance:
   m_ObjectHideFlags: 0

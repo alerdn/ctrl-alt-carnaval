@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 3.14}
+  m_AnchoredPosition: {x: 0, y: 1.287}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &907355379374452616
@@ -139,12 +139,12 @@ GameObject:
   m_Component:
   - component: {fileID: 607480351662445174}
   - component: {fileID: 3538139104254785400}
-  - component: {fileID: 1605702325584611535}
   - component: {fileID: 4670394018883276872}
   - component: {fileID: 2837659408140359372}
+  - component: {fileID: 1605702325584611535}
   - component: {fileID: 5280614818953070976}
   m_Layer: 8
-  m_Name: PFB_EnemyBigRobot
+  m_Name: PFB_EnemyChaser
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,7 @@ Transform:
   m_Children:
   - {fileID: 7446730398554223252}
   - {fileID: 1003461595447056697}
-  - {fileID: 7165811371073131841}
+  - {fileID: 2667443704343992872}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3538139104254785400
@@ -189,28 +189,11 @@ MonoBehaviour:
   <HitUI>k__BackingField: {fileID: 1029580453750339995}
   <EXPCollectablePrefab>k__BackingField: {fileID: 2654649969164371957, guid: f17398c55db96dc48beb5f680d521620, type: 3}
   <ExpValue>k__BackingField: 0
-  <InitialDamage>k__BackingField: 20
+  <InitialDamage>k__BackingField: 10
   <AttackRange>k__BackingField: 1.5
   <ImpactRange>k__BackingField: 0
-  <HealEffect>k__BackingField: {fileID: 8585401838545929663}
+  <HealEffect>k__BackingField: {fileID: 3554399963717192406}
   _debug: 0
---- !u!114 &1605702325584611535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8602381005397385813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f19d1e8b360a9243ad920be2c88ff5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _initialMaxHealth: 100
-  _initialDefence: 1
-  _health: 0
-  _currentMaxHealth: 0
-  _defence: 0
 --- !u!195 &4670394018883276872
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -221,9 +204,9 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.35
-  m_Speed: 4
+  m_Speed: 6
   m_Acceleration: 120
-  avoidancePriority: 45
+  avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -249,6 +232,23 @@ MonoBehaviour:
   OnBeatEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1605702325584611535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602381005397385813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f19d1e8b360a9243ad920be2c88ff5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialMaxHealth: 30
+  _initialDefence: 1
+  _health: 0
+  _currentMaxHealth: 0
+  _defence: 0
 --- !u!136 &5280614818953070976
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -272,7 +272,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &5356334764224850908
+--- !u!1001 &874609296786121909
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -329,15 +329,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a368333e1e9f423489735766ad319e5a, type: 3}
---- !u!4 &7165811371073131841 stripped
+--- !u!4 &2667443704343992872 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2965503183955590813, guid: a368333e1e9f423489735766ad319e5a, type: 3}
-  m_PrefabInstance: {fileID: 5356334764224850908}
+  m_PrefabInstance: {fileID: 874609296786121909}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &8585401838545929663 stripped
+--- !u!198 &3554399963717192406 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4427319268181716579, guid: a368333e1e9f423489735766ad319e5a, type: 3}
-  m_PrefabInstance: {fileID: 5356334764224850908}
+  m_PrefabInstance: {fileID: 874609296786121909}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6976815427730019711
 PrefabInstance:
@@ -373,15 +373,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e17f0abdb1adfb043a93e068d87300a9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e17f0abdb1adfb043a93e068d87300a9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e17f0abdb1adfb043a93e068d87300a9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e17f0abdb1adfb043a93e068d87300a9, type: 3}
       propertyPath: m_LocalPosition.x

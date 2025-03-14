@@ -497,7 +497,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0095c865bca23fc42abe81a0e9fb5969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
   _clock: {fileID: 11400000, guid: 92719870b25ec62478e96cd437b247d4, type: 2}
   _lastWave: 10
   _waves:
@@ -510,13 +509,14 @@ MonoBehaviour:
     EnemiesSubWaveCount: 12
     TotalEXP: 120
   - WaveNumber: 7
-    EnemiesCount: 120
+    EnemiesCount: 84
     EnemiesSubWaveCount: 12
     TotalEXP: 120
   - WaveNumber: 9
-    EnemiesCount: 280
+    EnemiesCount: 120
     EnemiesSubWaveCount: 12
     TotalEXP: 120
+  _player: {fileID: 0}
   _enemiesContainer: {fileID: 0}
   _enemiesData:
   - Enemy: {fileID: 3538139104254785400, guid: 8c2d32f02d03f9844a59098a3bd96d04, type: 3}
@@ -547,43 +547,33 @@ MonoBehaviour:
   - Enemy: {fileID: 3538139104254785400, guid: c3b60ba4f1c29654f95077816c0cdc16, type: 3}
     WaveNumber: 10
     MaxAmount: 1
-    CurrentAmount: 0
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 2
-    MaxAmount: 2
-    CurrentAmount: 0
+    MaxAmount: 1
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 3
     MaxAmount: 2
-    CurrentAmount: 0
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 4
-    MaxAmount: 5
-    CurrentAmount: 0
+    MaxAmount: 2
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 5
-    MaxAmount: 5
-    CurrentAmount: 0
+    MaxAmount: 2
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 6
-    MaxAmount: 10
-    CurrentAmount: 0
+    MaxAmount: 3
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 7
-    MaxAmount: 5
-    CurrentAmount: 0
+    MaxAmount: 3
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 8
-    MaxAmount: 10
-    CurrentAmount: 0
+    MaxAmount: 3
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
     WaveNumber: 9
-    MaxAmount: 10
-    CurrentAmount: 0
+    MaxAmount: 3
   - Enemy: {fileID: 3867508748326546234, guid: 23e1a89194e344c4b948b53659a50a5a, type: 3}
-    WaveNumber: 10
+    WaveNumber: 5
     MaxAmount: 10
-    CurrentAmount: 0
   _innerRadius: 12
   _outerRadius: 18
   _xBoudries: {x: -25, y: 75}

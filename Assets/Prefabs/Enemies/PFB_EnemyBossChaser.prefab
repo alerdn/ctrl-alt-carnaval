@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvas: {fileID: 1003461595447056697}
   _hitTextPrefab: {fileID: 5195933621915132406, guid: 9c3c5528a5b997d458dd547233243b19, type: 3}
+  _chatTextPrefab: {fileID: 0}
 --- !u!1 &8602381005397385813
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +190,7 @@ MonoBehaviour:
   <HitUI>k__BackingField: {fileID: 1029580453750339995}
   <EXPCollectablePrefab>k__BackingField: {fileID: 2654649969164371957, guid: f17398c55db96dc48beb5f680d521620, type: 3}
   <ExpValue>k__BackingField: 0
-  <InitialDamage>k__BackingField: 200
+  <InitialDamage>k__BackingField: 500
   <AttackRange>k__BackingField: 1.5
   <ImpactRange>k__BackingField: 0
   <HealEffect>k__BackingField: {fileID: 8039101057248304509}
@@ -207,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shieldEffect: {fileID: 0}
-  _initialMaxHealth: 1000
+  _initialMaxHealth: 10000
   _initialDefence: 30
   _health: 0
   _currentMaxHealth: 0

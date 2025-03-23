@@ -69,6 +69,7 @@ public class WaveManager : MonoBehaviour
     private TimeSpan _timeSpan;
 
     private List<EnemyStateMachine> _lastWaveEnemies = new();
+    private bool _isLastWaveSpawning;
     private bool _lastWaveSpawned;
     private bool _hasWon;
 
@@ -98,7 +99,16 @@ public class WaveManager : MonoBehaviour
             _clock.Value = $"{CurrentTimeSpan.Minutes:D2}:{CurrentTimeSpan.Seconds:D2}";
         }
 
-        if (_lastWaveSpawned && _lastWaveEnemies.TrueForAll(enemy => !enemy.isActiveAndEnabled) && !_hasWon)
+        // Verificar se todos os inimigos da última wave foram derrotados
+        if (_lastWaveSpawned
+            && _lastWaveEnemies.TrueForAll(enemy =>
+                // Verifica se o inimigo foi derrotado
+                enemy != null && !enemy.isActiveAndEnabled
+
+                // Verifica se o inimigo foi destruído
+                || enemy == null
+            )
+            && !_hasWon)
         {
             _hasWon = true;
             PlayerStateMachine.Instance.Win();
@@ -107,8 +117,14 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnWave()
     {
-        if (IsLastWave && _lastWaveSpawned) return;
+        // Se é ultima rodada e todos os inimigos já foram spawnados, não fazer nada
+        if (IsLastWave)
+        {
+            if (_isLastWaveSpawning) return;
+            _isLastWaveSpawning = true;
+        }
 
+        // Se há inimigos da wave anterior, melhorá-los
         foreach (var enemy in _enemies)
         {
             if (enemy.isActiveAndEnabled)
@@ -117,15 +133,16 @@ public class WaveManager : MonoBehaviour
             }
         }
 
+        // Spawnar inimigos
         StartCoroutine(SpawnWaveTask());
     }
 
     private IEnumerator SpawnWaveTask()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
 
+        // Spawnar inimigos especiais
         var specialList = _specialEnemiesData.FindAll(data => CurrentTimeSpan.Minutes == data.WaveNumber);
-
         foreach (var special in specialList)
         {
             for (int i = 0; i < special.MaxAmount; i++)
@@ -139,9 +156,9 @@ public class WaveManager : MonoBehaviour
             }
         }
 
+        // Spawnar inimigos normais
         int maxEnemiesAmountToSpawn = Mathf.Max(_maxEnemiesSpawned - _enemies.FindAll(enemy => enemy.isActiveAndEnabled).Count, 0);
-
-        WaveConfig wave = _waves.FindLast(wave => CurrentTimeSpan.Minutes >= wave.WaveNumber);
+        WaveConfig wave = _waves.FindLast(wave => wave.WaveNumber <= CurrentTimeSpan.Minutes);
         if (wave != null)
         {
             int enemiesPerSubWave = Mathf.CeilToInt((float)wave.EnemiesCount / wave.EnemiesSubWaveCount);
@@ -165,11 +182,19 @@ public class WaveManager : MonoBehaviour
 
                     yield return new WaitForEndOfFrame();
                 }
-                yield return new WaitForSeconds(60f / wave.EnemiesSubWaveCount);
+
+                // Esperar apenas se não for a última subwave
+                if (i < wave.EnemiesSubWaveCount - 1)
+                {
+                    yield return new WaitForSeconds(60f / wave.EnemiesSubWaveCount);
+                }
             }
         }
 
-        if (IsLastWave) _lastWaveSpawned = true;
+        if (IsLastWave)
+        {
+            _lastWaveSpawned = true;
+        }
     }
 
     private Vector3 GetRandomPointInRing()

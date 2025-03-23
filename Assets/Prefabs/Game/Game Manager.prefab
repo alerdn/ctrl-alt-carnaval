@@ -301,7 +301,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 979.93, y: 84.01}
+  m_SizeDelta: {x: 1033.52, y: 84.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7463674335683813655
 CanvasRenderer:
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "atire e desvie no ritmo para ativar habilides \nespeciais e sobreviver
+  m_text: "atire e desvie no ritmo para ativar habilidades \nespeciais e sobreviver
     ate 10 minuto"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1b636cecd70a5954a83588dd43dc354c, type: 2}
